@@ -1,0 +1,45 @@
+//
+//  PrefixHeader.pch
+//  WebServiceSample
+//
+//  Created by LandtoSky on 6/14/16.
+//  Copyright © 2016 LandtoSky. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+
+#import "Config.h"
+#import "JSWaiter.h"
+#import "JSON.h"
+#import "UIImageView+AFNetworking.h"
+#import "UIButton+AFNetworking.h"
+#import "DoAlertView.h"
+#import "DatabaseController.h"
+
+#import "UIViewController+LGSideMenuController.h"
+#import "UIViewController+JASidePanel.h"
+
+
+#import "AppDelegate.h"
+#import "AppController.h"
+#import "CommonUtils.h"
+#import "BaseViewController.h"
+#import "UserBaseViewController.h"
+
+#define appController [AppController sharedInstance]
+#define commonUtils [CommonUtils shared]
+
+#import "UIColor+HexValue.h"
+
+// Petsharing
+#import "DemoMessagesViewController.h"
+
+#endif /* PrefixHeader_pch */
