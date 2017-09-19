@@ -9,6 +9,7 @@
 #import "SitterPersonalInfoVC.h"
 #import "SBPickerSelector.h"  //https://github.com/Busta117/SBPickerSelector
 #import "iCarousel.h"
+#import "DogUser.h"
 
 @interface SitterPersonalInfoVC ()<SBPickerSelectorDelegate, UIScrollViewDelegate, UITextFieldDelegate,iCarouselDataSource, iCarouselDelegate>
 
@@ -77,7 +78,40 @@
 #pragma mark - Button Action
 -(IBAction)onContinue:(id)sender
 {
-    [self performSegueWithIdentifier:@"SitterTermsVCSegue" sender:nil];
+	if (!firstNameTxt.text.length || !lastNameTxt.text.length ||
+		!emailTxt.text.length ||
+		!pswdTxt.text.length || ![pswdTxt.text isEqualToString:confirmPswdTxt.text] ||
+		!phoneNumTxt.text.length ||
+		!taskTxt.text.length ) {
+		
+		[commonUtils showAlert:@"Warning!" withMessage:@"Please input all field correctly."];
+		return;
+	}
+	
+	UIImage *img = (avatarIv.image != nil? avatarIv.image: [UIImage imageNamed:@"user-placeholder"]);
+	[[DogUser curUser] setWith:@""
+						role:DogUserRoleSitter
+					  avatar:img
+				   firstName:firstNameTxt.text
+					lastName:lastNameTxt.text
+					   email:emailTxt.text
+					password:pswdTxt.text
+					   phone:phoneNumTxt.text
+					 aboutMe:@""
+					aboutDog:@""
+					category:taskTxt.text];
+	
+	[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+	[[DogUser curUser] signUp:^(NSError *error) {
+		[MBProgressHUD hideHUDForView:self.view animated:YES];
+		
+		if (error) {
+			[commonUtils showAlert:@"Warning!" withMessage:error.localizedDescription];
+			return;
+		}
+	
+		[self performSegueWithIdentifier:@"SitterTermsVCSegue" sender:nil];
+	}];
 }
 
 
@@ -288,7 +322,7 @@
     
     SBPickerSelector *picker = [SBPickerSelector picker];
     
-    picker.pickerData = [@[@"Dog Walking",@"Hour",@"All Day",@"Week",@"Sharing",@"Older Dog", @"Other"] mutableCopy]; //picker content
+	picker.pickerData = [DogUser dogSitterCategories];//[@[@"Dog Walking",@"Hour",@"All Day",@"Week",@"Sharing",@"Older Dog", @"Other"] mutableCopy]; //picker content
     picker.delegate = self;
     picker.pickerType = SBPickerSelectorTypeText;
     picker.doneButtonTitle = @"Done";

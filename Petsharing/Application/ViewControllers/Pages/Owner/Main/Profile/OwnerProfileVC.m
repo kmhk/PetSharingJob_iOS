@@ -7,11 +7,19 @@
 //
 
 #import "OwnerProfileVC.h"
+#import "DogUser.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+
 
 @interface OwnerProfileVC ()
 {
     IBOutlet UIScrollView *mScrollView;
     IBOutlet UIView *contentView;
+	
+	IBOutlet UIImageView *imgViewAvatar;
+	IBOutlet UILabel *lblName;
+	IBOutlet UITextView *txtViewAboutMe;
+	IBOutlet UITextView *txtViewAboutDog;
 }
 
 @end
@@ -26,7 +34,20 @@
 
 - (void) initData
 {
-    
+	[[FirebaseRef storageForAvatar:[DogUser curUser].userID] downloadURLWithCompletion:^(NSURL * _Nullable URL, NSError * _Nullable error) {
+		if (error) {
+			[commonUtils showAlert:@"Warning!" withMessage:error.localizedDescription];
+			return;
+		}
+		
+		[imgViewAvatar sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"avatar5"]];
+	}];
+	
+	lblName.text = [NSString stringWithFormat:@"%@ %@", [DogUser curUser].strFirstName, [DogUser curUser].strLastName];
+	
+	txtViewAboutMe.text = [DogUser curUser].strAboutMe;
+	
+	txtViewAboutDog.text = [DogUser curUser].strAboutDog;
 }
 
 - (void)initUI
@@ -36,6 +57,8 @@
 
 - (IBAction)onOwnerSignout:(id)sender
 {
+	[[DogUser curUser] logout];
+	
     [[AppDelegate sharedAppDelegate] logOut];
 }
 /*

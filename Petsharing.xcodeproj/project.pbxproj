@@ -173,7 +173,6 @@
 		B7013797600794B629D20DE8 /* libPods-Petsharing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A29369CCC044637321CD70B /* libPods-Petsharing.a */; };
 		CE14B19A1F7057C800AA9D58 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE14B1991F7057C800AA9D58 /* GoogleService-Info.plist */; };
 		CE14B1A21F705C5E00AA9D58 /* DogUser.m in Sources */ = {isa = PBXBuildFile; fileRef = CE14B1A11F705C5E00AA9D58 /* DogUser.m */; };
-		CE14B1A51F7061F300AA9D58 /* DogAvatar.m in Sources */ = {isa = PBXBuildFile; fileRef = CE14B1A41F7061F300AA9D58 /* DogAvatar.m */; };
 		CE14B1A91F7076BD00AA9D58 /* FirebaseRef.m in Sources */ = {isa = PBXBuildFile; fileRef = CE14B1A81F7076BD00AA9D58 /* FirebaseRef.m */; };
 /* End PBXBuildFile section */
 
@@ -487,8 +486,6 @@
 		CE14B1991F7057C800AA9D58 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CE14B1A01F705C5E00AA9D58 /* DogUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DogUser.h; path = Object/DogUser.h; sourceTree = "<group>"; };
 		CE14B1A11F705C5E00AA9D58 /* DogUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DogUser.m; path = Object/DogUser.m; sourceTree = "<group>"; };
-		CE14B1A31F7061F300AA9D58 /* DogAvatar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DogAvatar.h; path = Object/DogAvatar.h; sourceTree = "<group>"; };
-		CE14B1A41F7061F300AA9D58 /* DogAvatar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DogAvatar.m; path = Object/DogAvatar.m; sourceTree = "<group>"; };
 		CE14B1A71F7076BD00AA9D58 /* FirebaseRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FirebaseRef.h; path = Utils/Firebase/FirebaseRef.h; sourceTree = "<group>"; };
 		CE14B1A81F7076BD00AA9D58 /* FirebaseRef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FirebaseRef.m; path = Utils/Firebase/FirebaseRef.m; sourceTree = "<group>"; };
 		CE14B1AD1F708E5B00AA9D58 /* DogObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DogObject.h; path = Object/DogObject.h; sourceTree = "<group>"; };
@@ -1394,8 +1391,6 @@
 			isa = PBXGroup;
 			children = (
 				CE14B1AD1F708E5B00AA9D58 /* DogObject.h */,
-				CE14B1A31F7061F300AA9D58 /* DogAvatar.h */,
-				CE14B1A41F7061F300AA9D58 /* DogAvatar.m */,
 				CE14B1A01F705C5E00AA9D58 /* DogUser.h */,
 				CE14B1A11F705C5E00AA9D58 /* DogUser.m */,
 			);
@@ -1599,7 +1594,6 @@
 				5FFBAF3C1F4F099D00C578A6 /* GoogleAutoCompleteViewController.m in Sources */,
 				5FE52BDA1F4BC8A100066891 /* FindJobDetailVC.m in Sources */,
 				5F61C1D51F2E5FE800F1F409 /* JSWaiter.m in Sources */,
-				CE14B1A51F7061F300AA9D58 /* DogAvatar.m in Sources */,
 				5FD69B761F515CE600EFF637 /* JSQMessagesAvatarImageFactory.m in Sources */,
 				5F61C1D61F2E5FE800F1F409 /* Reachability.m in Sources */,
 				5F61C1D71F2E5FE800F1F409 /* SHAlertHelper.m in Sources */,

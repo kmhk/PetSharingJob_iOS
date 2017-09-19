@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DogAvatar.h"
 #import "DogObject.h"
 
 
@@ -19,6 +18,7 @@
 #define kUserAboutDog			@"aboutdog"
 #define kUserCategory			@"category"
 #define kUserRole				@"role"
+#define kUserRate				@"rate"
 
 
 // DogUser class
@@ -29,12 +29,12 @@
 
 @property (assign) DogUserRole userRole;
 
-@property (assign) DogAvatar *dogAvatar;
+@property (assign) UIImage *dogAvatar;
 @property (assign) NSString *strFirstName;
 @property (assign) NSString *strLastName;
 @property (assign) NSString *strEmail;
 @property (assign) NSString *strPhone;
-@property (assign) NSString *strPassword;	
+@property (assign) NSString *strPassword;
 
 // for dog owner only
 @property (assign) NSString *strAboutMe;
@@ -42,23 +42,30 @@
 
 // for dog sitter only
 @property (assign) NSString *strCategory;
+@property (nonatomic) float fRate;
 
 
-+ (DogUser *)user:(NSString *)userID
-			 role:(DogUserRole)role
-		   avatar:(DogAvatar *)avatar
-		firstName:(NSString *)first
-		 lastName:(NSString *)last
-			email:(NSString *)email
-		 password:(NSString *)password
-			phone:(NSString *)phone
-		  aboutMe:(NSString *)aboutMe
-		 aboutDog:(NSString *)aboutDog
-		 category:(NSString *)category;
 
++ (NSArray *)dogSitterCategories;
+
++ (DogUser *)curUser;
+
+- (void)setWith:(NSString *)userID
+			role:(DogUserRole)role
+		  avatar:(UIImage *)avatar
+	   firstName:(NSString *)first
+		lastName:(NSString *)last
+		   email:(NSString *)email
+		password:(NSString *)password
+		   phone:(NSString *)phone
+		 aboutMe:(NSString *)aboutMe
+		aboutDog:(NSString *)aboutDog
+		category:(NSString *)category;
 
 - (void)signUp:(CompletionCallback)completion;
+- (void)login:(NSString *)email password:(NSString *)password completion:(CompletionCallback)completion;
+- (void)logout;
+
 - (void)save:(CompletionCallback)completion;
 
 @end
-

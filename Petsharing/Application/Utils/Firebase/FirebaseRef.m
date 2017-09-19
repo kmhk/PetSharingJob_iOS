@@ -20,7 +20,8 @@
 }
 
 + (FIRStorageReference *)storageForAvatar:(NSString *)userID {
-	return [[[[FirebaseRef storage] child:@"avatar"] child:userID] child:@"avatar.jpg"];
+	NSString *name = [NSString stringWithFormat:@"%@.jpg", userID];
+	return [[[FirebaseRef storage] child:@"avatar"] child:name];
 }
 
 

@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES" initialViewController="wmc-Um-lX5">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES" initialViewController="wmc-Um-lX5">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -2784,7 +2784,12 @@ EFNpZ24gb3V0A
                     <navigationItem key="navigationItem" id="1Kt-L2-96t"/>
                     <connections>
                         <outlet property="contentView" destination="XdO-jJ-7Uh" id="N4c-gT-BKp"/>
+                        <outlet property="imgViewAvatar" destination="HBC-RU-fRC" id="Zpb-lN-jd7"/>
+                        <outlet property="lblJobs" destination="aJd-3s-DgV" id="a5J-IQ-LPO"/>
+                        <outlet property="lblName" destination="pbu-uh-sXO" id="J8N-ae-GRh"/>
                         <outlet property="mScrollView" destination="dJQ-Xv-krN" id="Grp-CJ-Z7g"/>
+                        <outlet property="txtViewIntroduction" destination="fQr-nv-5Dv" id="Yf4-Gn-5eN"/>
+                        <outlet property="viewRate" destination="QsJ-D2-Pzm" id="1Na-l4-OAD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6v9-Zb-7ac" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4480,7 +4485,11 @@ EFNpZ24gb3V0A
                     <navigationItem key="navigationItem" id="EHy-Na-NK3"/>
                     <connections>
                         <outlet property="contentView" destination="bL0-ER-3Xi" id="ukM-wv-0fp"/>
+                        <outlet property="imgViewAvatar" destination="Vfn-lp-F0U" id="ko9-5y-FV3"/>
+                        <outlet property="lblName" destination="9Xp-fZ-j7i" id="bKC-yG-U6M"/>
                         <outlet property="mScrollView" destination="n3r-T7-Hpq" id="hY3-oa-bDn"/>
+                        <outlet property="txtViewAboutDog" destination="wk6-Oh-pbA" id="zGn-Ee-Jg5"/>
+                        <outlet property="txtViewAboutMe" destination="3NU-mX-ml2" id="n04-D3-Uzt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u4N-Pm-Bij" userLabel="First Responder" sceneMemberID="firstResponder"/>

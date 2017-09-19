@@ -93,17 +93,14 @@
 		!aboutDogTxtView.text.length ||
 		!aboutDogTxtView.text.length) {
 		
-		UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"Please input all field correctly" preferredStyle:UIAlertControllerStyleAlert];
-		[alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
-		[self presentViewController:alert animated:YES completion:nil];
-		return;
+		[commonUtils showAlert:@"Warning!" withMessage:@"Please input all field correctly"];
 		return;
 	}
 	
 	UIImage *img = (avatarIv.image != nil? avatarIv.image: [UIImage imageNamed:@"user-placeholder"]);
-	gCurUser = [DogUser user:@""
+	[[DogUser curUser] setWith:@""
 						role:DogUserRoleOwner
-					  avatar:[DogAvatar avatar:@"" image:img ]
+					  avatar:img
 				   firstName:firstNameTxt.text
 					lastName:lastNameTxt.text
 					   email:emailTxt.text
@@ -114,13 +111,11 @@
 					category:@""];
 	
 	[MBProgressHUD showHUDAddedTo:self.view animated:YES];
-	[gCurUser signUp:^(NSError *error) {
+	[[DogUser curUser] signUp:^(NSError *error) {
 		[MBProgressHUD hideHUDForView:self.view animated:YES];
 		
 		if (error) {
-			UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
-			[alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
-			[self presentViewController:alert animated:YES completion:nil];
+			[commonUtils showAlert:@"Warning!" withMessage:error.localizedDescription];
 			return;
 		}
 		

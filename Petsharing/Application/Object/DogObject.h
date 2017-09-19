@@ -19,6 +19,3 @@ typedef NS_ENUM(NSInteger, DogUserRole) {
 	DogUserRoleOwner = 1,
 };
 
-
-@class DogUser;
-extern DogUser *gCurUser;

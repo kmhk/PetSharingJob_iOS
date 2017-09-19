@@ -6,6 +6,9 @@
 //
 
 #import "LogInVC.h"
+#import "DogUser.h"
+#import "SitterTbVC.h"
+#import "OwnerTbVC.h"
 
 @interface LogInVC () <UIScrollViewDelegate, UITextFieldDelegate>
 {
@@ -50,15 +53,39 @@
     
     if (!email.length) {
         [commonUtils showAlert:@"Warning!" withMessage:@"Email is required."];
+		
     } else if (!Password.length) {
         [commonUtils showAlert:@"Warning!" withMessage:@"Password is required."];
+		
     } else if(![commonUtils validateEmail:email]) {
         [commonUtils showAlert:@"Warning!" withMessage:@"Email is not valid."];
+		
     } else {
-        NSMutableDictionary *loginDic = [[NSMutableDictionary alloc] init];
-        [loginDic setObject:@"1" forKey:@"signin_mode"];
-        [loginDic setObject:email forKey:@"user_email"];
-        [loginDic setObject:Password forKey:@"user_password"];
+		[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+		
+		[[DogUser curUser] login:email password:Password completion:^(NSError *error) {
+			[MBProgressHUD hideHUDForView:self.view animated:YES];
+			
+			if (error) {
+				[commonUtils showAlert:@"Warning!" withMessage:error.localizedDescription];
+				return;
+			}
+			
+			NSMutableDictionary *loginDic = [[NSMutableDictionary alloc] init];
+			[loginDic setObject:@"1" forKey:@"signin_mode"];
+			[loginDic setObject:email forKey:@"user_email"];
+			[loginDic setObject:Password forKey:@"user_password"];
+
+			if ([DogUser curUser].userRole == DogUserRoleOwner) {
+				OwnerTbVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"OwnerTbVC"];
+				[self presentViewController:vc animated:YES completion:nil];
+				
+			} else {
+				SitterTbVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SitterTbVC"];
+				[self presentViewController:vc animated:YES completion:nil];
+			}
+
+		}];
     }
 }
 
