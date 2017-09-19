@@ -10,6 +10,7 @@
 #import "OwnerPersonalInfoVC.h"
 #import "iCarousel.h"
 #import "SZTextView.h" //https://github.com/glaszig/SZTextView  UITextView Placeholder
+#import "DogUser.h"
 
 @interface OwnerPersonalInfoVC ()<UIScrollViewDelegate, UITextFieldDelegate,UITextViewDelegate,iCarouselDataSource, iCarouselDelegate>
 {
@@ -85,7 +86,46 @@
 #pragma mark - Button Action
 -(IBAction)onContinue:(id)sender
 {
-    [self performSegueWithIdentifier:@"OwnerTermsVCSegue" sender:nil];
+	if (!firstNameTxt.text.length || !lastNameTxt.text.length ||
+		!emailTxt.text.length ||
+		!pswdTxt.text.length || ![pswdTxt.text isEqualToString:confirmPswdTxt.text] ||
+		!phoneNumTxt.text.length ||
+		!aboutDogTxtView.text.length ||
+		!aboutDogTxtView.text.length) {
+		
+		UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"Please input all field correctly" preferredStyle:UIAlertControllerStyleAlert];
+		[alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+		[self presentViewController:alert animated:YES completion:nil];
+		return;
+		return;
+	}
+	
+	UIImage *img = (avatarIv.image != nil? avatarIv.image: [UIImage imageNamed:@"user-placeholder"]);
+	gCurUser = [DogUser user:@""
+						role:DogUserRoleOwner
+					  avatar:[DogAvatar avatar:@"" image:img ]
+				   firstName:firstNameTxt.text
+					lastName:lastNameTxt.text
+					   email:emailTxt.text
+					password:pswdTxt.text
+					   phone:phoneNumTxt.text
+					 aboutMe:aboutMeTxtView.text
+					aboutDog:aboutDogTxtView.text
+					category:@""];
+	
+	[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+	[gCurUser signUp:^(NSError *error) {
+		[MBProgressHUD hideHUDForView:self.view animated:YES];
+		
+		if (error) {
+			UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+			[alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+			[self presentViewController:alert animated:YES completion:nil];
+			return;
+		}
+		
+		[self performSegueWithIdentifier:@"OwnerTermsVCSegue" sender:nil];
+	}];
 }
 
 

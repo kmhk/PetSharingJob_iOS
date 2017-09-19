@@ -171,6 +171,10 @@
 		5FE52BE91F4C95C200066891 /* MyJobContainerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE52BE81F4C95C200066891 /* MyJobContainerVC.m */; };
 		5FFBAF3C1F4F099D00C578A6 /* GoogleAutoCompleteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FFBAF3B1F4F099D00C578A6 /* GoogleAutoCompleteViewController.m */; };
 		B7013797600794B629D20DE8 /* libPods-Petsharing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A29369CCC044637321CD70B /* libPods-Petsharing.a */; };
+		CE14B19A1F7057C800AA9D58 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE14B1991F7057C800AA9D58 /* GoogleService-Info.plist */; };
+		CE14B1A21F705C5E00AA9D58 /* DogUser.m in Sources */ = {isa = PBXBuildFile; fileRef = CE14B1A11F705C5E00AA9D58 /* DogUser.m */; };
+		CE14B1A51F7061F300AA9D58 /* DogAvatar.m in Sources */ = {isa = PBXBuildFile; fileRef = CE14B1A41F7061F300AA9D58 /* DogAvatar.m */; };
+		CE14B1A91F7076BD00AA9D58 /* FirebaseRef.m in Sources */ = {isa = PBXBuildFile; fileRef = CE14B1A81F7076BD00AA9D58 /* FirebaseRef.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -480,6 +484,14 @@
 		8A29369CCC044637321CD70B /* libPods-Petsharing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Petsharing.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAE62DE584472448E6CFF514 /* Pods-Petsharing.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Petsharing.release.xcconfig"; path = "Pods/Target Support Files/Pods-Petsharing/Pods-Petsharing.release.xcconfig"; sourceTree = "<group>"; };
 		B75876AA6D47C611C791862C /* Pods-Petsharing.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Petsharing.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Petsharing/Pods-Petsharing.debug.xcconfig"; sourceTree = "<group>"; };
+		CE14B1991F7057C800AA9D58 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		CE14B1A01F705C5E00AA9D58 /* DogUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DogUser.h; path = Object/DogUser.h; sourceTree = "<group>"; };
+		CE14B1A11F705C5E00AA9D58 /* DogUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DogUser.m; path = Object/DogUser.m; sourceTree = "<group>"; };
+		CE14B1A31F7061F300AA9D58 /* DogAvatar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DogAvatar.h; path = Object/DogAvatar.h; sourceTree = "<group>"; };
+		CE14B1A41F7061F300AA9D58 /* DogAvatar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DogAvatar.m; path = Object/DogAvatar.m; sourceTree = "<group>"; };
+		CE14B1A71F7076BD00AA9D58 /* FirebaseRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FirebaseRef.h; path = Utils/Firebase/FirebaseRef.h; sourceTree = "<group>"; };
+		CE14B1A81F7076BD00AA9D58 /* FirebaseRef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FirebaseRef.m; path = Utils/Firebase/FirebaseRef.m; sourceTree = "<group>"; };
+		CE14B1AD1F708E5B00AA9D58 /* DogObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DogObject.h; path = Object/DogObject.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -580,6 +592,7 @@
 		5F61BF851F2E527000F1F409 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				CE14B1991F7057C800AA9D58 /* GoogleService-Info.plist */,
 				5F61BF911F2E527000F1F409 /* Assets.xcassets */,
 				5F61BF931F2E527000F1F409 /* LaunchScreen.storyboard */,
 				5F61BF961F2E527000F1F409 /* Info.plist */,
@@ -591,6 +604,9 @@
 		5F61C07D1F2E5FE800F1F409 /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				CE14B19F1F705A9800AA9D58 /* Object */,
+				CE14B19D1F705A6F00AA9D58 /* Utils */,
+				CE14B19B1F705A1800AA9D58 /* ViewModel */,
 				5F61C07E1F2E5FE800F1F409 /* AppControllers */,
 				5F61C0811F2E5FE800F1F409 /* CommonUtils */,
 				5F61C0841F2E5FE800F1F409 /* Config */,
@@ -1350,6 +1366,42 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		CE14B19B1F705A1800AA9D58 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = ViewModel;
+			sourceTree = "<group>";
+		};
+		CE14B19D1F705A6F00AA9D58 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				CE14B19E1F705A7600AA9D58 /* Firebase */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		CE14B19E1F705A7600AA9D58 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				CE14B1A71F7076BD00AA9D58 /* FirebaseRef.h */,
+				CE14B1A81F7076BD00AA9D58 /* FirebaseRef.m */,
+			);
+			name = Firebase;
+			sourceTree = "<group>";
+		};
+		CE14B19F1F705A9800AA9D58 /* Object */ = {
+			isa = PBXGroup;
+			children = (
+				CE14B1AD1F708E5B00AA9D58 /* DogObject.h */,
+				CE14B1A31F7061F300AA9D58 /* DogAvatar.h */,
+				CE14B1A41F7061F300AA9D58 /* DogAvatar.m */,
+				CE14B1A01F705C5E00AA9D58 /* DogUser.h */,
+				CE14B1A11F705C5E00AA9D58 /* DogUser.m */,
+			);
+			name = Object;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1384,8 +1436,8 @@
 				TargetAttributes = {
 					5F61BF811F2E527000F1F409 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 4JCWJC9B77;
-						ProvisioningStyle = Manual;
+						DevelopmentTeam = Q8NGZS6ASA;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -1423,6 +1475,7 @@
 				5F61C1DA1F2E5FE800F1F409 /* HelveticaNeueLTStd-BdCn.otf in Resources */,
 				5FD69B8D1F515CE600EFF637 /* JSQMessagesCollectionViewCellIncoming.xib in Resources */,
 				5FD69B6E1F515CE600EFF637 /* JSQMessagesAssets.bundle in Resources */,
+				CE14B19A1F7057C800AA9D58 /* GoogleService-Info.plist in Resources */,
 				5F61C1A61F2E5FE800F1F409 /* Info.plist in Resources */,
 				5F61C1AF1F2E5FE800F1F409 /* check_black@2x.png in Resources */,
 				5F61C1B41F2E5FE800F1F409 /* pic1.jpg in Resources */,
@@ -1530,6 +1583,7 @@
 				5FD69B851F515CE600EFF637 /* JSQMessagesAvatarImage.m in Sources */,
 				5F61C1A41F2E5FE800F1F409 /* CommonUtils.m in Sources */,
 				5F61C25A1F2E5FE800F1F409 /* OwnerPersonalInfoVC.m in Sources */,
+				CE14B1A91F7076BD00AA9D58 /* FirebaseRef.m in Sources */,
 				5FD69B721F515CE600EFF637 /* UIImage+JSQMessages.m in Sources */,
 				5FD69B711F515CE600EFF637 /* UIColor+JSQMessages.m in Sources */,
 				5F61C1CE1F2E5FE800F1F409 /* DatabaseController.m in Sources */,
@@ -1545,6 +1599,7 @@
 				5FFBAF3C1F4F099D00C578A6 /* GoogleAutoCompleteViewController.m in Sources */,
 				5FE52BDA1F4BC8A100066891 /* FindJobDetailVC.m in Sources */,
 				5F61C1D51F2E5FE800F1F409 /* JSWaiter.m in Sources */,
+				CE14B1A51F7061F300AA9D58 /* DogAvatar.m in Sources */,
 				5FD69B761F515CE600EFF637 /* JSQMessagesAvatarImageFactory.m in Sources */,
 				5F61C1D61F2E5FE800F1F409 /* Reachability.m in Sources */,
 				5F61C1D71F2E5FE800F1F409 /* SHAlertHelper.m in Sources */,
@@ -1576,6 +1631,7 @@
 				5F61C1BD1F2E5FE800F1F409 /* UIViewController+KNSemiModal.m in Sources */,
 				5F61C25C1F2E5FE800F1F409 /* OwnerTermsVC.m in Sources */,
 				5F61C1AA1F2E5FE800F1F409 /* CustomBadge.m in Sources */,
+				CE14B1A21F705C5E00AA9D58 /* DogUser.m in Sources */,
 				5FC66B331F505DB900EFDAAF /* EndJobVC.m in Sources */,
 				5F61C1BA1F2E5FE800F1F409 /* UIImage+UISegmentIconAndText.m in Sources */,
 				5F61C1B71F2E5FE800F1F409 /* UIImage+fixOrientation.m in Sources */,
@@ -1760,7 +1816,9 @@
 			baseConfigurationReference = B75876AA6D47C611C791862C /* Pods-Petsharing.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 4JCWJC9B77;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = Q8NGZS6ASA;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Petsharing/Application/Config/PrefixHeader.pch;
 				INFOPLIST_FILE = Petsharing/Info.plist;
@@ -1768,8 +1826,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.admin.PetSharing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "bed983e3-fcea-4df3-9c4d-9b57deaaaf8b";
-				PROVISIONING_PROFILE_SPECIFIER = PetsharingDevProvision;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1779,7 +1837,9 @@
 			baseConfigurationReference = AAE62DE584472448E6CFF514 /* Pods-Petsharing.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 4JCWJC9B77;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = Q8NGZS6ASA;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Petsharing/Application/Config/PrefixHeader.pch;
 				INFOPLIST_FILE = Petsharing/Info.plist;
@@ -1787,8 +1847,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.admin.PetSharing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "bed983e3-fcea-4df3-9c4d-9b57deaaaf8b";
-				PROVISIONING_PROFILE_SPECIFIER = PetsharingDevProvision;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

@@ -42,4 +42,6 @@
 // Petsharing
 #import "DemoMessagesViewController.h"
 
+#import "DogObject.h"
+
 #endif /* PrefixHeader_pch */

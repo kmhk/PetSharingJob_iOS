@@ -12,6 +12,13 @@ pod 'SVPullToRefresh'
 pod 'MBProgressHUD'
 pod 'SDWebImage', '~>3.8'
 
+# Firebase
+pod 'Firebase/Core'
+pod 'Firebase/Storage'
+pod 'Firebase/Database'
+pod 'Firebase/Auth'
+pod 'Firebase/Messaging'
+
 # Facebook SDK
 pod 'FBSDKCoreKit'
 pod 'FBSDKShareKit'
