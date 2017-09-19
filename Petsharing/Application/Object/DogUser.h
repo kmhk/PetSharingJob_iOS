@@ -25,23 +25,23 @@
 
 @interface DogUser : NSObject
 
-@property (assign) NSString *userID;
+@property (nonatomic) NSString *userID;
 
-@property (assign) DogUserRole userRole;
+@property (nonatomic) DogUserRole userRole;
 
-@property (assign) UIImage *dogAvatar;
-@property (assign) NSString *strFirstName;
-@property (assign) NSString *strLastName;
-@property (assign) NSString *strEmail;
-@property (assign) NSString *strPhone;
-@property (assign) NSString *strPassword;
+@property (nonatomic) UIImage *dogAvatar;
+@property (nonatomic) NSString *strFirstName;
+@property (nonatomic) NSString *strLastName;
+@property (nonatomic) NSString *strEmail;
+@property (nonatomic) NSString *strPhone;
+@property (nonatomic) NSString *strPassword;
 
 // for dog owner only
-@property (assign) NSString *strAboutMe;
-@property (assign) NSString *strAboutDog;
+@property (nonatomic) NSString *strAboutMe;
+@property (nonatomic) NSString *strAboutDog;
 
 // for dog sitter only
-@property (assign) NSString *strCategory;
+@property (nonatomic) NSString *strCategory;
 @property (nonatomic) float fRate;
 
 

@@ -47,7 +47,7 @@
 	
 	lblName.text = [NSString stringWithFormat:@"%@ %@", [DogUser curUser].strFirstName, [DogUser curUser].strLastName];
 	
-	viewRate.value = 2.5;//gCurUser.fRate;
+	viewRate.value = [DogUser curUser].fRate;
 	
 	lblJobs.text = [NSString stringWithFormat:@"from %d jobs", 3];
 	
