@@ -12,12 +12,20 @@
 #import "SitterTbVC.h"
 #import "DogUser.h"
 #import "DogJob.h"
+#import "AppDelegate.h"
 
+
+typedef enum {
+	ArrangedTypeTime = 0,
+	ArrangedTypePrice,
+	ArrangedTypeDistance
+} ArrangedType;
 
 @interface FindJobListVC ()<UITableViewDelegate, UITableViewDataSource>
 {
     IBOutlet UITableView *mainTV;
-    
+	
+	ArrangedType typeArrange;
 }
 
 @end
@@ -27,6 +35,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
+	typeArrange = ArrangedTypeTime;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -49,7 +58,7 @@
 			return;
 		}
 		
-		[mainTV reloadData];
+		[self arrangeJobs];
 	}];
 }
 
@@ -57,6 +66,39 @@
 {
     
 }
+
+- (IBAction)segmentSortChanged:(UISegmentedControl *)sender {
+	typeArrange = sender.selectedSegmentIndex;
+	[self arrangeJobs];
+}
+
+- (void)arrangeJobs {
+	if (typeArrange == ArrangedTypeTime) { // arrange by time
+		[sitterViewModel.allJobs sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+			return [((DogJob *)obj2).jobCreatedDate compare:((DogJob *)obj1).jobCreatedDate];
+		}];
+		[mainTV reloadData];
+		
+	} else if (typeArrange == ArrangedTypePrice) { // arrange by price
+		[sitterViewModel.allJobs sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+			return (((DogJob *)obj1).jobPrice < ((DogJob *)obj2).jobPrice);
+		}];
+		
+	} else { //arranged by distance
+		[sitterViewModel.allJobs sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+			CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:((DogJob *)obj1).jobLocation.latitude longitude:((DogJob *)obj1).jobLocation.longitude];
+			CLLocationDistance distance1 = [[AppDelegate sharedAppDelegate].currentLocation distanceFromLocation:loc1];
+			
+			CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:((DogJob *)obj2).jobLocation.latitude longitude:((DogJob *)obj2).jobLocation.longitude];
+			CLLocationDistance distance2 = [[AppDelegate sharedAppDelegate].currentLocation distanceFromLocation:loc2];
+			
+			return (distance1 < distance2);
+		}];
+	}
+	
+	[mainTV reloadData];
+}
+
 
 #pragma mark - TableView Delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

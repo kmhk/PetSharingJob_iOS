@@ -11,6 +11,7 @@ pod 'SVProgressHUD'
 pod 'SVPullToRefresh'
 pod 'MBProgressHUD'
 pod 'SDWebImage', '~>3.8'
+pod 'JPSThumbnailAnnotation'
 
 # Firebase
 pod 'Firebase/Core'

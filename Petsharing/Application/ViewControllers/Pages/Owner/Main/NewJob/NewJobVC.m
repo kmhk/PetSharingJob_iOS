@@ -27,6 +27,8 @@
     
     NSInteger start_endDateTimeBtnIndex; // 0: Start time, 1: End time
 	NSString *jobPerformed;
+	
+	CLLocationCoordinate2D jobLocation;
 }
 
 @end
@@ -73,8 +75,8 @@
 					  category:jobCategoryLbl.text
 					 performed:jobPerformed
 						 price:[jobPriceTxt.text floatValue]
-					   address:@"Norregade 22, Denmark"//jobAddressLbl.text
-					  location:CLLocationCoordinate2DMake(0, 0)
+					   address:jobAddressLbl.text//@"Norregade 22, Denmark"
+					  location:jobLocation//CLLocationCoordinate2DMake(0, 0)
 					 startDate:[commonUtils convertLocalTimeStringToGMT:jobStartTimeLbl.text]
 					   endDate:[commonUtils convertLocalTimeStringToGMT:jobEndTimeLbl.text]
 					completion:^(NSError *error) {
@@ -179,8 +181,8 @@
     NSLog(@"Latitude => %f", location.coordinate.latitude);
     NSLog(@"Longitude => %f", location.coordinate.longitude);
     [jobAddressLbl setText:addLocationAddress];
-    
-    
+	jobLocation = location.coordinate;
+	
     if([addLocationAddress isEqualToString:@""]) {
          [commonUtils showVAlertSimple:@"Warning" body:@"Please try again with different address to add" duration:1.3f];
     } else {

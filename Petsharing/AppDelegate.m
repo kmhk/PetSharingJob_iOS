@@ -28,8 +28,8 @@
 	
 	[FIRApp configure];
     
-    //    [self updateLocationManager];
-    
+	[self updateLocationManager];
+	
     
     // Register Push Notification
     /*
@@ -142,7 +142,9 @@
     //    if([commonUtils getUserDefault:@"flag_location_query_enabled"] != nil && [[commonUtils getUserDefault:@"flag_location_query_enabled"] isEqualToString:@"1"]) {
     _locationManager = [[CLLocationManager alloc] init];
     _locationManager.delegate = self;
-    [_locationManager setDistanceFilter:804.17f]; // Distance Filter as 0.5 mile (1 mile = 1609.34m)
+	_locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+	
+//    [_locationManager setDistanceFilter:804.17f]; // Distance Filter as 0.5 mile (1 mile = 1609.34m)
     //locationManager.distanceFilter=kCLDistanceFilterNone;
     
     
@@ -154,6 +156,7 @@
     if(IS_OS_8_OR_LATER) {
         [_locationManager requestAlwaysAuthorization];
     }
+	[_locationManager startUpdatingLocation];
     //        [_locationManager startMonitoringSignificantLocationChanges];
     //        [_locationManager startUpdatingLocation];
     //    }
@@ -165,21 +168,21 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-    NSLog(@"didUpdateToLocation: %@", [locations lastObject]);
-    CLLocation *currentLocation = [locations lastObject];
-    if (currentLocation != nil) {
-        BOOL locationChanged = NO;
-        if(![commonUtils getUserDefault:@"currentLatitude"] || ![commonUtils getUserDefault:@"currentLongitude"]) {
-            locationChanged = YES;
-        } else if(![[commonUtils getUserDefault:@"currentLatitude"] isEqualToString:[NSString stringWithFormat:@"%.8f", currentLocation.coordinate.latitude]] || ![[commonUtils getUserDefault:@"currentLongitude"] isEqualToString:[NSString stringWithFormat:@"%.8f", currentLocation.coordinate.longitude]]) {
-            locationChanged = YES;
-        }
-        if(locationChanged) {
-            [commonUtils setUserDefault:@"currentLatitude" withFormat:[NSString stringWithFormat:@"%.8f", currentLocation.coordinate.latitude]];
-            [commonUtils setUserDefault:@"currentLongitude" withFormat:[NSString stringWithFormat:@"%.8f", currentLocation.coordinate.longitude]];
-            //            [commonUtils setUserDefault:@"barksUpdate" withFormat:@"1"];
-        }
-    }
+    _currentLocation = [locations lastObject];
+	
+//    if (_currentLocation != nil) {
+//        BOOL locationChanged = NO;
+//        if(![commonUtils getUserDefault:@"currentLatitude"] || ![commonUtils getUserDefault:@"currentLongitude"]) {
+//            locationChanged = YES;
+//        } else if(![[commonUtils getUserDefault:@"currentLatitude"] isEqualToString:[NSString stringWithFormat:@"%.8f", _currentLocation.coordinate.latitude]] || ![[commonUtils getUserDefault:@"currentLongitude"] isEqualToString:[NSString stringWithFormat:@"%.8f", _currentLocation.coordinate.longitude]]) {
+//            locationChanged = YES;
+//        }
+//        if(locationChanged) {
+//            [commonUtils setUserDefault:@"currentLatitude" withFormat:[NSString stringWithFormat:@"%.8f", _currentLocation.coordinate.latitude]];
+//            [commonUtils setUserDefault:@"currentLongitude" withFormat:[NSString stringWithFormat:@"%.8f", _currentLocation.coordinate.longitude]];
+//            //            [commonUtils setUserDefault:@"barksUpdate" withFormat:@"1"];
+//        }
+//    }
     [_locationManager stopUpdatingLocation];
     //    [self updateUserLocation];
 }

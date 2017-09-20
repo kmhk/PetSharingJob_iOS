@@ -10,6 +10,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "DogUser.h"
 #import "DogJob.h"
+#import "AppDelegate.h"
 
 
 @implementation JobListTVCell
@@ -33,6 +34,15 @@
 	}];
 	
 	self.jobTitleLbl.text = job.jobTitle;
+	
+	CLLocation *loc = [[CLLocation alloc] initWithLatitude:job.jobLocation.latitude longitude:job.jobLocation.longitude];
+	CLLocationDistance distance = [[AppDelegate sharedAppDelegate].currentLocation distanceFromLocation:loc];
+	
+	if (distance > 1000) {
+		self.jobStatusLbl.text = [NSString stringWithFormat:@"%.1f Km", distance/1000];
+	} else {
+		self.jobStatusLbl.text = [NSString stringWithFormat:@"%.1f m", distance];
+	}
 }
 
 @end

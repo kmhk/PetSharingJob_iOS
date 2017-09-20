@@ -36,5 +36,7 @@
 	<string>1:926011969381:ios:151249fb7a4c0999</string>
 	<key>DATABASE_URL</key>
 	<string>https://petsharing-b6a1d.firebaseio.com</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>location using</string>
 </dict>
 </plist>

@@ -11,7 +11,9 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate, CLLocationManagerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, retain) CLLocationManager *locationManager;
+
+@property (strong, nonatomic) CLLocationManager *locationManager;
+@property (nonatomic) CLLocation *currentLocation;
 
 - (void)updateLocationManager;
 -(void) logOut;
