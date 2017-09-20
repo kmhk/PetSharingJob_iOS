@@ -484,6 +484,14 @@
     return [formatter stringFromDate:date];
 }
 
+- (NSDate *)convertLocalTimeStringToGMT:(NSString *)dateStr {
+	NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+	[formatter setDateFormat:PetDateFormatStr];
+	[formatter setTimeZone:[NSTimeZone systemTimeZone]];
+	
+	return [formatter dateFromString:dateStr];
+}
+
 
 
 // Scale image to the specified size

@@ -9,6 +9,7 @@
 #import "NewJobVC.h"
 #import "SBPickerSelector.h"  //https://github.com/Busta117/SBPickerSelector
 #import "GoogleAutoCompleteViewController.h"
+#import "OwnerTbVC.h"
 
 
 @interface NewJobVC () <UIScrollViewDelegate, UITextFieldDelegate, UITextViewDelegate,SBPickerSelectorDelegate, GoogleAutoCompleteViewDelegate>
@@ -22,8 +23,10 @@
     IBOutlet UILabel *jobAddressLbl;
     IBOutlet UILabel *jobStartTimeLbl;
     IBOutlet UILabel *jobEndTimeLbl;
+	IBOutlet UITextField *jobPriceTxt;
     
     NSInteger start_endDateTimeBtnIndex; // 0: Start time, 1: End time
+	NSString *jobPerformed;
 }
 
 @end
@@ -34,6 +37,8 @@
     [super viewDidLoad];
     [self initData];
     [self initUI];
+	
+	jobPerformed = [jobLocationBtns[0] titleForState:UIControlStateNormal];
 }
 
 - (void)initData
@@ -44,6 +49,10 @@
 - (void) initUI
 {
     mScrollView.delegate = self;
+	NSLog(@"%@", NSStringFromCGRect(self.view.frame));
+	NSLog(@"%@, %@", NSStringFromCGRect(mScrollView.frame), NSStringFromCGRect(contentView.frame));
+	[mScrollView setContentSize:contentView.frame.size];
+	
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTappedScreen)]];
 
 }
@@ -57,12 +66,34 @@
 #pragma mark - Button Action
 -(IBAction)onPostJob:(id)sender
 {
- 
+	[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+	
+	[ownerViewModel postNewJob:jobTitleTxt.text
+				   description:jobDescTxtView.text
+					  category:jobCategoryLbl.text
+					 performed:jobPerformed
+						 price:[jobPriceTxt.text floatValue]
+					   address:@"Norregade 22, Denmark"//jobAddressLbl.text
+					  location:CLLocationCoordinate2DMake(0, 0)
+					 startDate:[commonUtils convertLocalTimeStringToGMT:jobStartTimeLbl.text]
+					   endDate:[commonUtils convertLocalTimeStringToGMT:jobEndTimeLbl.text]
+					completion:^(NSError *error) {
+						
+						[MBProgressHUD hideHUDForView:self.view animated:YES];
+						
+						if (error) {
+							[commonUtils showAlert:@"Warning!" withMessage:error.localizedDescription];
+							return;
+						}
+						
+						[commonUtils showAlert:@"Success" withMessage:@"Your job posted!"];
+	 }];
 }
 
 - (IBAction)onWhereBtns:(UIButton*)sender
 {
     [commonUtils multileButtonActions:sender inButtons:jobLocationBtns];
+	jobPerformed = [sender titleForState:UIControlStateNormal];
     
 }
 
@@ -72,7 +103,9 @@
     if (self.isLoadingBase) return NO;
     if (textField == jobTitleTxt) {
         [mScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
-    }
+	} else if (textField == jobPriceTxt) {
+		[mScrollView setContentOffset:CGPointMake(0, 240) animated:YES];
+	}
     return YES;
 }
 

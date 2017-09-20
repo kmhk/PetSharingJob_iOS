@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SitterViewModel.h"
+
+
+#define sitterViewModel	(((SitterTbVC *)self.tabBarController).viewModel)
+
 
 @interface SitterTbVC : UITabBarController
+
+@property (nonatomic) SitterViewModel *viewModel;
 
 @end

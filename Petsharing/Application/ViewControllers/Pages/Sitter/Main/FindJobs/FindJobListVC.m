@@ -9,6 +9,10 @@
 #import "FindJobListVC.h"
 #import "JobListTVCell.h"
 #import "FindJobDetailVC.h"
+#import "SitterTbVC.h"
+#import "DogUser.h"
+#import "DogJob.h"
+
 
 @interface FindJobListVC ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -22,13 +26,31 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self initData];
-    [self initUI];
+	
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	
+	[self initData];
+	[self initUI];
 }
 
 - (void)initData
 {
-    
+	[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+	
+	[sitterViewModel loadAllJobs:^(NSError *error) {
+		[MBProgressHUD hideHUDForView:self.view animated:YES];
+		
+		if (error) {
+			[commonUtils showAlert:@"Warning!" withMessage:error.localizedDescription];
+			
+			return;
+		}
+		
+		[mainTV reloadData];
+	}];
 }
 
 - (void)initUI
@@ -39,7 +61,7 @@
 #pragma mark - TableView Delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return (sitterViewModel.allJobs == nil)? 0: sitterViewModel.allJobs.count;
 }
 
 - (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -55,6 +77,8 @@
     } else {
         [cell setBackgroundColor:[UIColor colorWithHex:@"#f1f1f1" alpha:1.0f]];
     }
+	
+	[cell setJob:sitterViewModel.allJobs[indexPath.row]];
     
     return cell;
 }
@@ -62,6 +86,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     FindJobDetailVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"FindJobDetailVC"];
+	vc.job = sitterViewModel.allJobs[indexPath.row];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

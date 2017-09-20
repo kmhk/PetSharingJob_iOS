@@ -10,4 +10,6 @@
 
 @interface LiveJobDetailVC : BaseViewController
 
+@property (nonatomic) DogJob *job;
+
 @end

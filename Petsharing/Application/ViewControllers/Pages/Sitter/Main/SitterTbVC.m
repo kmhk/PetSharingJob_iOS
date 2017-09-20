@@ -36,6 +36,8 @@
        
     }
     self.delegate = self;
+	
+	self.viewModel = [[SitterViewModel alloc] init];
 }
 
 - (void)viewWillLayoutSubviews

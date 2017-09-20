@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OwnerViewModel.h"
+
+
+#define ownerViewModel	(((OwnerTbVC *)self.tabBarController).viewModel)
+
 
 @interface OwnerTbVC : UITabBarController
+
+@property (nonatomic) OwnerViewModel *viewModel;
 
 @end

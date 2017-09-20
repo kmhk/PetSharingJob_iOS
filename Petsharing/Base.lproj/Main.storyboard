@@ -1669,7 +1669,6 @@ your self...</string>
                         <outlet property="containerHiredView" destination="57G-Rj-8Pg" id="IRB-d2-ilF"/>
                         <outlet property="containerPastView" destination="vV2-jW-b3Q" id="czI-VY-OpH"/>
                         <outlet property="hiredSegmentIv" destination="nF0-hN-lMh" id="JMd-fC-lTn"/>
-                        <outlet property="mainTV" destination="Ymt-2T-Jq5" id="Tpm-9Y-gLf"/>
                         <outlet property="pastSegmentIv" destination="8qx-BE-aIC" id="8lu-Tb-yTF"/>
                     </connections>
                 </viewController>
@@ -1711,14 +1710,14 @@ your self...</string>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="jobOwnerPhotoIv" destination="85P-Y8-Nxr" id="v4Q-oZ-vNr"/>
-                                            <outlet property="jobTitleLbl" destination="h3U-Tf-llU" id="PF7-Eh-dW6"/>
+                                            <outlet property="jobOwnerPhotoIv" destination="85P-Y8-Nxr" id="bm9-Ls-yRz"/>
+                                            <outlet property="jobTitleLbl" destination="h3U-Tf-llU" id="b0K-sW-26z"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="N38-XY-9kE" id="RGa-TC-jbK"/>
-                                    <outlet property="delegate" destination="N38-XY-9kE" id="EmY-Rr-qGy"/>
+                                    <outlet property="dataSource" destination="N38-XY-9kE" id="C1y-se-fXg"/>
+                                    <outlet property="delegate" destination="N38-XY-9kE" id="kdk-Jo-P0Y"/>
                                 </connections>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="2 ongoing jobs" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="h79-L5-zOA">
@@ -1731,6 +1730,10 @@ your self...</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="lblJobCount" destination="h79-L5-zOA" id="Zg0-dG-mNe"/>
+                        <outlet property="mainTV" destination="Ymt-2T-Jq5" id="Jnu-fT-HmI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gNN-sZ-MX9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2916,7 +2919,7 @@ EFNpZ24gb3V0A
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" misplaced="YES" id="yOx-o1-mUb">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="663"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" misplaced="YES" id="01G-ZJ-d1C" userLabel="Title View">
@@ -2969,7 +2972,7 @@ EFNpZ24gb3V0A
                                                 <color key="backgroundColor" red="0.94509803921568625" green="0.94509803921568625" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </view>
                                             <view contentMode="scaleToFill" misplaced="YES" id="X8S-cX-hoO" userLabel="Bottom Content View">
-                                                <rect key="frame" x="0.0" y="225" width="375" height="378"/>
+                                                <rect key="frame" x="0.0" y="225" width="375" height="438"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" misplaced="YES" id="jEy-03-Afg" userLabel="CategoryView">
@@ -3171,8 +3174,32 @@ EFNpZ24gb3V0A
                                                         </subviews>
                                                         <color key="backgroundColor" red="0.85098039219999999" green="0.91372549020000005" blue="0.94117647059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </view>
+                                                    <view contentMode="scaleToFill" misplaced="YES" id="B1u-QE-aH1" userLabel="Price View">
+                                                        <rect key="frame" x="0.0" y="300" width="375" height="60"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price (USD)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="v26-yV-keO" userLabel="title">
+                                                                <rect key="frame" x="8" y="0.0" width="280" height="20"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </label>
+                                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="500" placeholder="Price" minimumFontSize="17" id="elL-Dj-qcw">
+                                                                <rect key="frame" x="8" y="27" width="359" height="30"/>
+                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                                                <color key="textColor" red="0.0" green="0.61960784310000006" blue="0.89019607840000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                                <textInputTraits key="textInputTraits"/>
+                                                                <connections>
+                                                                    <outlet property="delegate" destination="gXn-6x-tZg" id="GYs-CS-NXy"/>
+                                                                </connections>
+                                                            </textField>
+                                                        </subviews>
+                                                        <color key="backgroundColor" red="0.94509803920000002" green="0.94509803920000002" blue="0.94509803920000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </view>
                                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Igi-FC-lAe">
-                                                        <rect key="frame" x="0.0" y="328" width="375" height="50"/>
+                                                        <rect key="frame" x="0.0" y="388" width="375" height="50"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                         <state key="normal" title="Post Job" backgroundImage="continue-back">
@@ -3200,6 +3227,7 @@ EFNpZ24gb3V0A
                         <outlet property="jobCategoryLbl" destination="8U7-jh-3TB" id="MZo-fq-AyZ"/>
                         <outlet property="jobDescTxtView" destination="o3s-L6-A0O" id="bVw-gx-g3j"/>
                         <outlet property="jobEndTimeLbl" destination="OCb-wy-FYc" id="pe7-N5-NXr"/>
+                        <outlet property="jobPriceTxt" destination="elL-Dj-qcw" id="fcm-JY-udl"/>
                         <outlet property="jobStartTimeLbl" destination="k18-bA-ytL" id="1Nt-kt-Zem"/>
                         <outlet property="jobTitleTxt" destination="xNs-eQ-0Bn" id="WY2-g9-xyM"/>
                         <outlet property="mScrollView" destination="zlI-sW-bk1" id="Msh-Qr-hmg"/>
@@ -3283,6 +3311,11 @@ EFNpZ24gb3V0A
                                                 </view>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="jobOwnerPhotoIv" destination="xYt-7y-x4k" id="agY-xi-J99"/>
+                                            <outlet property="jobStatusLbl" destination="rO1-32-PIF" id="u3E-Lz-kZA"/>
+                                            <outlet property="jobTitleLbl" destination="fjr-IM-SNS" id="86V-Wu-pi3"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -3304,7 +3337,7 @@ EFNpZ24gb3V0A
                     </view>
                     <connections>
                         <outlet property="mainTV" destination="yyr-1Y-Rac" id="9fv-tO-O51"/>
-                        <segue destination="YHv-ep-cyD" kind="push" id="zc0-BG-B9t"/>
+                        <segue destination="YHv-ep-cyD" kind="push" identifier="segueJobDetail" id="zc0-BG-B9t"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mxh-jI-kFb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3329,7 +3362,7 @@ EFNpZ24gb3V0A
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YfL-kh-SdZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="456" y="8522"/>
+            <point key="canvasLocation" x="466" y="8897"/>
         </scene>
         <!--Find Job DetailVC-->
         <scene sceneID="Zeg-mc-Me9">
@@ -3481,7 +3514,14 @@ EFNpZ24gb3V0A
                     <navigationItem key="navigationItem" id="NLd-TR-4sG"/>
                     <connections>
                         <outlet property="contentView" destination="wpu-Lb-Z1q" id="oZt-Vg-9Br"/>
+                        <outlet property="imgViewAvatar" destination="fmQ-nc-9lM" id="7uU-WA-Ead"/>
+                        <outlet property="lblEndDate" destination="wle-Bk-y97" id="SZR-Zx-sZR"/>
+                        <outlet property="lblJobAddress" destination="YtE-Yp-5eF" id="aGG-If-Su6"/>
+                        <outlet property="lblOwner" destination="7c5-b6-VD1" id="vY2-zN-j2g"/>
+                        <outlet property="lblStartDate" destination="18A-fl-Yca" id="qFn-fM-0Uc"/>
+                        <outlet property="lblTitle" destination="oIG-f8-MTQ" id="5EC-zs-nC5"/>
                         <outlet property="mScrollView" destination="skM-lF-68b" id="hR8-JV-vF8"/>
+                        <outlet property="txtDescription" destination="mMg-yF-8Sb" id="zDP-UR-IkH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4gX-1p-mWL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3635,9 +3675,10 @@ EFNpZ24gb3V0A
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="lblJobCount" destination="rII-Gr-th5" id="peo-Rw-VoA"/>
                         <outlet property="mainTV" destination="EFi-tD-kfo" id="AHu-2I-a3F"/>
-                        <segue destination="1Xx-ta-478" kind="push" id="JeW-8M-Yo6"/>
-                        <segue destination="g3r-Xf-xkI" kind="push" id="9cH-wj-3PK"/>
+                        <segue destination="1Xx-ta-478" kind="push" identifier="segueJobDetail" id="JeW-8M-Yo6"/>
+                        <segue destination="g3r-Xf-xkI" kind="push" identifier="segueJobEnd" id="9cH-wj-3PK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KAJ-CN-sXj" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3825,6 +3866,14 @@ EFNpZ24gb3V0A
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="A0K-HP-Ank"/>
+                    <connections>
+                        <outlet property="lblEndDate" destination="Mg0-s5-Iz9" id="sAL-8W-6FZ"/>
+                        <outlet property="lblJobAddress" destination="G6B-zu-CEd" id="haB-qs-O12"/>
+                        <outlet property="lblPrice" destination="At3-P0-cgi" id="78E-nj-mSg"/>
+                        <outlet property="lblStartDate" destination="FZQ-v6-Q7y" id="fdf-Kf-VKw"/>
+                        <outlet property="lblTitle" destination="rWm-kd-ZhX" id="0Y2-tE-Fl2"/>
+                        <outlet property="txtDescription" destination="F1v-Mf-cj2" id="FKj-bi-BCo"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3PP-jS-YWd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

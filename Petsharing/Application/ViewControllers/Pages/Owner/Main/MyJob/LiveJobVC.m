@@ -10,11 +10,13 @@
 #import "JobListTVCell.h"
 #import "LiveJobDetailVC.h"
 #import "EndJobVC.h"
+#import "OwnerTbVC.h"
 
 @interface LiveJobVC () <UITableViewDelegate, UITableViewDataSource>
 {
     IBOutlet UITableView *mainTV;
     
+	IBOutlet UILabel *lblJobCount;
 }
 
 
@@ -28,9 +30,18 @@
     [self initUI];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	
+	[mainTV reloadData];
+	
+	lblJobCount.text = [NSString stringWithFormat:@"%lu live tasks",
+						((ownerViewModel.hiredJobs == nil)? 0: ownerViewModel.hiredJobs.count) + ((ownerViewModel.postedJobs == nil)? 0: ownerViewModel.postedJobs.count)];
+}
+
 - (void)initData
 {
-    
+	
 }
 
 - (void)initUI
@@ -38,10 +49,25 @@
     
 }
 
+- (void)reloadJobs {
+	[mainTV reloadData];
+}
+
+
 #pragma mark - TableView Delegate
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+	return 2;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+	if (section == HIREDJOBSECTION) {
+		return (ownerViewModel.hiredJobs == nil)? 0: ownerViewModel.hiredJobs.count;
+		
+	} else {
+		return (ownerViewModel.postedJobs == nil)? 0: ownerViewModel.postedJobs.count;
+	}
 }
 
 - (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -58,37 +84,53 @@
         [cell setBackgroundColor:appController.appRowGreyColor];
     }
     
-    if (indexPath.row  < 2) {
-        [cell.jobStatusLbl setText:@"Hired"];
-    } else {
-        [cell.jobStatusLbl setText:@"Posted"];
-    }
+	if (indexPath.section == HIREDJOBSECTION) {
+		[cell setJob:ownerViewModel.hiredJobs[indexPath.row]];
+		[cell.jobStatusLbl setText:@"Hired"];
+		
+	} else {
+		[cell setJob:ownerViewModel.postedJobs[indexPath.row]];
+		[cell.jobStatusLbl setText:@"Posted"];
+	}
     
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row  < 2) {
-        EndJobVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"EndJobVC"];
-        [self.navigationController pushViewController:vc animated:YES];
-    } else {
-        LiveJobDetailVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"LiveJobDetailVC"];
-        [self.navigationController pushViewController:vc animated:YES];
-
-    }
-
-   
+	if (indexPath.section == HIREDJOBSECTION) {
+		[self performSegueWithIdentifier:@"segueJobEnd" sender:indexPath];
+	} else {
+		[self performSegueWithIdentifier:@"segueJobDetail" sender:indexPath];
+	}
+	
+//	if (indexPath.row  < 2) {
+//		EndJobVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"EndJobVC"];
+//		[self.navigationController pushViewController:vc animated:YES];
+//	} else {
+//		LiveJobDetailVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"LiveJobDetailVC"];
+//		[self.navigationController pushViewController:vc animated:YES];
+//		
+//	}
 }
 
-/*
- #pragma mark - Navigation
- 
+#pragma mark - Navigation
+
  // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
  // Get the new view controller using [segue destinationViewController].
  // Pass the selected object to the new view controller.
- }
- */
+	if ([segue.identifier isEqualToString:@"segueJobDetail"]) {
+		LiveJobDetailVC *vc = (LiveJobDetailVC *)segue.destinationViewController;
+		
+		if ([sender section] == HIREDJOBSECTION) {
+			vc.job = ownerViewModel.hiredJobs[[sender row]];
+			
+		} else {
+			vc.job = ownerViewModel.postedJobs[[sender row]];
+		}
+	}
+}
+
 
 @end

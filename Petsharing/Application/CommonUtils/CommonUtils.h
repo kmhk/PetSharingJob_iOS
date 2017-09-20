@@ -85,6 +85,7 @@
 
 - (NSDate *)convertStringToDate:(NSString *)dateStr;
 - (NSString *)convertDateToString:(NSDate *)date;
+- (NSDate *)convertLocalTimeStringToGMT:(NSString *)dateStr;
 
 - (UIImage *)cropImage:(UIImage *)image scaledToSize:(CGSize)newSize;
 - (NSString *)getContentTypeForImageData:(NSData *)data;

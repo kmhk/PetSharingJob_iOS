@@ -14,9 +14,8 @@
 @interface FirebaseRef : NSObject
 
 + (FIRDatabaseReference *)allUsers;
++ (FIRDatabaseReference *)allJobs;
 + (FIRStorageReference *)storage;
 + (FIRStorageReference *)storageForAvatar:(NSString *)userID;
-
-+ (void)signup:(NSString *)email password:(NSString *)password completion:(FIRAuthResultCallback)completion;
 
 @end

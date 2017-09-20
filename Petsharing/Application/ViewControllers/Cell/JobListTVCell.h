@@ -12,4 +12,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *jobOwnerPhotoIv;
 @property (strong, nonatomic) IBOutlet UILabel *jobTitleLbl;
 @property (strong, nonatomic) IBOutlet UILabel *jobStatusLbl;
+
+- (void)setJob:(DogJob *)job;
+
 @end

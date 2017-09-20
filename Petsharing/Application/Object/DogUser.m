@@ -84,7 +84,7 @@ DogUser *gSharedUser = nil;
 // MARK: - firebase interacting methods
 
 - (void)signUp:(CompletionCallback)completion {
-	[FirebaseRef signup:self.strEmail password:self.strPassword completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
+	[[FIRAuth auth] createUserWithEmail:self.strEmail password:self.strPassword completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
 		if (error) {
 			completion(error);
 			return;
@@ -124,6 +124,9 @@ DogUser *gSharedUser = nil;
 			self.strAboutDog = dict[kUserAboutDog];
 			self.strCategory = dict[kUserCategory];
 			self.fRate = (dict[kUserRate] != nil)? [dict[kUserRate] floatValue]: 0.0;
+			self.postedJobIDs = (dict[kPostedJob] != nil)? [NSMutableArray arrayWithArray:dict[kPostedJob]]: [[NSMutableArray alloc] init];
+			self.hiredJobIDs = (dict[kHiredJob] != nil)? [NSMutableArray arrayWithArray:dict[kHiredJob]]: [[NSMutableArray alloc] init];
+			self.finishedJobIDs = (dict[kFinishedJob] != nil)? [NSMutableArray arrayWithArray:dict[kFinishedJob]]: [[NSMutableArray alloc] init];
 			
 			completion(nil);
 		}];
@@ -154,11 +157,29 @@ DogUser *gSharedUser = nil;
 						   kUserAboutMe: self.strAboutMe,
 						   kUserAboutDog: self.strAboutDog,
 						   kUserCategory: self.strCategory,
-						   kUserRate: @(self.fRate)};
+						   kUserRate: @(self.fRate),
+						   kPostedJob: (self.postedJobIDs == nil? @[]: self.postedJobIDs),
+						   kHiredJob: (self.hiredJobIDs == nil? @[]: self.hiredJobIDs),
+						   kFinishedJob: (self.finishedJobIDs == nil? @[]: self.finishedJobIDs)};
 	NSDictionary *dict = @{self.userID: user};
 	
-	NSLog(@"saving user data to db: %@", user);
+//	NSLog(@"saving user data to db: %@", user);
 	[[FirebaseRef allUsers] updateChildValues:dict withCompletionBlock:^(NSError * _Nullable error, FIRDatabaseReference * _Nonnull ref) {
+		completion(error);
+	}];
+}
+
+
+- (void)addPostedJobID:(NSString *)jobID completion:(CompletionCallback)completion {
+	if (!self.postedJobIDs) {
+		self.postedJobIDs = [[NSMutableArray alloc] init];
+	}
+	
+	[self.postedJobIDs addObject:jobID];
+	
+	NSDictionary *dict = @{kPostedJob: self.postedJobIDs};
+	
+	[[[FirebaseRef allUsers] child:self.userID] updateChildValues:dict withCompletionBlock:^(NSError * _Nullable error, FIRDatabaseReference * _Nonnull ref) {
 		completion(error);
 	}];
 }

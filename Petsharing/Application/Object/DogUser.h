@@ -19,6 +19,9 @@
 #define kUserCategory			@"category"
 #define kUserRole				@"role"
 #define kUserRate				@"rate"
+#define kPostedJob				@"postedjob"
+#define kHiredJob				@"hiredjob"
+#define kFinishedJob			@"finishedjob"
 
 
 // DogUser class
@@ -39,12 +42,16 @@
 // for dog owner only
 @property (nonatomic) NSString *strAboutMe;
 @property (nonatomic) NSString *strAboutDog;
+@property (nonatomic) NSMutableArray *postedJobIDs;
+@property (nonatomic) NSMutableArray *hiredJobIDs;
+@property (nonatomic) NSMutableArray *finishedJobIDs;
 
 // for dog sitter only
 @property (nonatomic) NSString *strCategory;
 @property (nonatomic) float fRate;
 
 
+// MARK: - public methods
 
 + (NSArray *)dogSitterCategories;
 
@@ -67,5 +74,8 @@
 - (void)logout;
 
 - (void)save:(CompletionCallback)completion;
+
+// for job
+- (void)addPostedJobID:(NSString *)jobID completion:(CompletionCallback)completion;
 
 @end

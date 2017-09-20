@@ -10,8 +10,11 @@
 #import "FirebaseRef.h"
 
 
+@class DogJob;
+
+
 typedef void (^CompletionCallback)(NSError *error);
-typedef void (^FetchImageCallback)(UIImage *image);
+typedef void (^FetchJobCallback)(DogJob *job);
 
 
 typedef NS_ENUM(NSInteger, DogUserRole) {

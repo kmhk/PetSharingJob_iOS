@@ -9,11 +9,14 @@
 #import "MyJobVC.h"
 #import "JobListTVCell.h"
 #import "MyJobDetailVC.h"
+#import "SitterTbVC.h"
+
 
 @interface MyJobVC () <UITableViewDelegate, UITableViewDataSource>
 {
     IBOutlet UITableView *mainTV;
-    
+	
+	IBOutlet UILabel *lblJobCount;
 }
 
 @end
@@ -22,13 +25,33 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self initData];
-    [self initUI];
+	
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	
+	[self initData];
+	[self initUI];
 }
 
 - (void)initData
 {
-    
+	[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+	
+	[sitterViewModel loadAllMyJobs:^(NSError *error) {
+		[MBProgressHUD hideHUDForView:self.view animated:YES];
+		
+		if (error) {
+			[commonUtils showAlert:@"Warning!" withMessage:error.localizedDescription];
+			
+			return;
+		}
+		
+		[mainTV reloadData];
+		lblJobCount.text = [NSString stringWithFormat:@"%lu ongoing jobs",
+							((sitterViewModel.hiredJobs == nil)? 0: sitterViewModel.hiredJobs.count) + ((sitterViewModel.postedJobs == nil)? 0: sitterViewModel.postedJobs.count)];
+	}];
 }
 
 - (void)initUI
@@ -39,7 +62,7 @@
 #pragma mark - TableView Delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return (sitterViewModel.hiredJobs == nil)? 0: sitterViewModel.hiredJobs.count;;
 }
 
 - (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -55,24 +78,31 @@
     } else {
         [cell setBackgroundColor:appController.appRowGreyColor];
     }
+	
+	[cell setJob:sitterViewModel.hiredJobs[indexPath.row]];
     
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+//	[self performSegueWithIdentifier:@"segueJobEnd" sender:indexPath];
     MyJobDetailVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MyJobDetailVC"];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+	if ([segue.identifier isEqualToString:@"segueJobDetail"]) {
+//		MyJobDetailVC *vc = (MyJobDetailVC *)segue.destinationViewController;
+		
+//		vc.job = ownerViewModel.hiredJobs[[sender row]];
+	}
 }
-*/
 
 @end

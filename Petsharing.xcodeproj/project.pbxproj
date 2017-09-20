@@ -171,6 +171,9 @@
 		5FE52BE91F4C95C200066891 /* MyJobContainerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE52BE81F4C95C200066891 /* MyJobContainerVC.m */; };
 		5FFBAF3C1F4F099D00C578A6 /* GoogleAutoCompleteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FFBAF3B1F4F099D00C578A6 /* GoogleAutoCompleteViewController.m */; };
 		B7013797600794B629D20DE8 /* libPods-Petsharing.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A29369CCC044637321CD70B /* libPods-Petsharing.a */; };
+		CE037BB91F719B7800887D64 /* DogJob.m in Sources */ = {isa = PBXBuildFile; fileRef = CE037BB81F719B7800887D64 /* DogJob.m */; };
+		CE037BBC1F723A0300887D64 /* OwnerViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE037BBB1F723A0300887D64 /* OwnerViewModel.m */; };
+		CE037BBF1F72A94F00887D64 /* SitterViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CE037BBE1F72A94F00887D64 /* SitterViewModel.m */; };
 		CE14B19A1F7057C800AA9D58 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE14B1991F7057C800AA9D58 /* GoogleService-Info.plist */; };
 		CE14B1A21F705C5E00AA9D58 /* DogUser.m in Sources */ = {isa = PBXBuildFile; fileRef = CE14B1A11F705C5E00AA9D58 /* DogUser.m */; };
 		CE14B1A91F7076BD00AA9D58 /* FirebaseRef.m in Sources */ = {isa = PBXBuildFile; fileRef = CE14B1A81F7076BD00AA9D58 /* FirebaseRef.m */; };
@@ -483,6 +486,12 @@
 		8A29369CCC044637321CD70B /* libPods-Petsharing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Petsharing.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAE62DE584472448E6CFF514 /* Pods-Petsharing.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Petsharing.release.xcconfig"; path = "Pods/Target Support Files/Pods-Petsharing/Pods-Petsharing.release.xcconfig"; sourceTree = "<group>"; };
 		B75876AA6D47C611C791862C /* Pods-Petsharing.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Petsharing.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Petsharing/Pods-Petsharing.debug.xcconfig"; sourceTree = "<group>"; };
+		CE037BB71F719B7800887D64 /* DogJob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DogJob.h; path = Object/DogJob.h; sourceTree = "<group>"; };
+		CE037BB81F719B7800887D64 /* DogJob.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DogJob.m; path = Object/DogJob.m; sourceTree = "<group>"; };
+		CE037BBA1F723A0300887D64 /* OwnerViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OwnerViewModel.h; path = ViewModel/OwnerViewModel.h; sourceTree = "<group>"; };
+		CE037BBB1F723A0300887D64 /* OwnerViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OwnerViewModel.m; path = ViewModel/OwnerViewModel.m; sourceTree = "<group>"; };
+		CE037BBD1F72A94F00887D64 /* SitterViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SitterViewModel.h; path = ViewModel/SitterViewModel.h; sourceTree = "<group>"; };
+		CE037BBE1F72A94F00887D64 /* SitterViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SitterViewModel.m; path = ViewModel/SitterViewModel.m; sourceTree = "<group>"; };
 		CE14B1991F7057C800AA9D58 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CE14B1A01F705C5E00AA9D58 /* DogUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DogUser.h; path = Object/DogUser.h; sourceTree = "<group>"; };
 		CE14B1A11F705C5E00AA9D58 /* DogUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DogUser.m; path = Object/DogUser.m; sourceTree = "<group>"; };
@@ -1366,6 +1375,10 @@
 		CE14B19B1F705A1800AA9D58 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				CE037BBA1F723A0300887D64 /* OwnerViewModel.h */,
+				CE037BBB1F723A0300887D64 /* OwnerViewModel.m */,
+				CE037BBD1F72A94F00887D64 /* SitterViewModel.h */,
+				CE037BBE1F72A94F00887D64 /* SitterViewModel.m */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -1393,6 +1406,8 @@
 				CE14B1AD1F708E5B00AA9D58 /* DogObject.h */,
 				CE14B1A01F705C5E00AA9D58 /* DogUser.h */,
 				CE14B1A11F705C5E00AA9D58 /* DogUser.m */,
+				CE037BB71F719B7800887D64 /* DogJob.h */,
+				CE037BB81F719B7800887D64 /* DogJob.m */,
 			);
 			name = Object;
 			sourceTree = "<group>";
@@ -1596,11 +1611,13 @@
 				5F61C1D51F2E5FE800F1F409 /* JSWaiter.m in Sources */,
 				5FD69B761F515CE600EFF637 /* JSQMessagesAvatarImageFactory.m in Sources */,
 				5F61C1D61F2E5FE800F1F409 /* Reachability.m in Sources */,
+				CE037BBC1F723A0300887D64 /* OwnerViewModel.m in Sources */,
 				5F61C1D71F2E5FE800F1F409 /* SHAlertHelper.m in Sources */,
 				5F61C1D11F2E5FE800F1F409 /* SBJSON.m in Sources */,
 				5F61C2551F2E5FE800F1F409 /* TabBarVC.m in Sources */,
 				5FD69B951F515CE600EFF637 /* JSQMessagesMediaPlaceholderView.m in Sources */,
 				5F61C2541F2E5FE800F1F409 /* BaseViewController.m in Sources */,
+				CE037BB91F719B7800887D64 /* DogJob.m in Sources */,
 				5FD69B7D1F515CE600EFF637 /* JSQMessagesBubblesSizeCalculator.m in Sources */,
 				5FE52BCF1F4BC35600066891 /* MyJobDetailVC.m in Sources */,
 				5F61C1B91F2E5FE800F1F409 /* UIImage+ResizeMagick.m in Sources */,
@@ -1682,6 +1699,7 @@
 				5F102BA51F4DC0C400C62867 /* OwnerTbVC.m in Sources */,
 				5F61C1A71F2E5FE800F1F409 /* CALayer+UIColor.m in Sources */,
 				5F61C1C91F2E5FE800F1F409 /* SPGooglePlacesPlaceDetailQuery.m in Sources */,
+				CE037BBF1F72A94F00887D64 /* SitterViewModel.m in Sources */,
 				5FD69B7F1F515CE600EFF637 /* JSQMessagesCollectionViewFlowLayoutInvalidationContext.m in Sources */,
 				5F61C1CC1F2E5FE800F1F409 /* VSDropdown.m in Sources */,
 				5FD69B821F515CE600EFF637 /* JSQLocationMediaItem.m in Sources */,

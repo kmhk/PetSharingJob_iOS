@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+
+#define HIREDJOBSECTION					0
+#define POSTEDJOBSECTION				1
+
+
 @interface LiveJobVC : BaseViewController
+
+- (void)reloadJobs;
 
 @end
