@@ -49,6 +49,7 @@
 - (void)initData
 {
 	[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+	[mapView removeAnnotations:mapView.annotations];
 	
 	[sitterViewModel loadAllJobs:^(NSError *error) {
 		[MBProgressHUD hideHUDForView:self.view animated:YES];

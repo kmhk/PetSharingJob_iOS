@@ -69,7 +69,7 @@ typedef enum {
 
 - (IBAction)segmentSortChanged:(UISegmentedControl *)sender {
 	typeArrange = sender.selectedSegmentIndex;
-	[self arrangeJobs];
+	[self initData];
 }
 
 - (void)arrangeJobs {
@@ -77,7 +77,6 @@ typedef enum {
 		[sitterViewModel.allJobs sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
 			return [((DogJob *)obj2).jobCreatedDate compare:((DogJob *)obj1).jobCreatedDate];
 		}];
-		[mainTV reloadData];
 		
 	} else if (typeArrange == ArrangedTypePrice) { // arrange by price
 		[sitterViewModel.allJobs sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
