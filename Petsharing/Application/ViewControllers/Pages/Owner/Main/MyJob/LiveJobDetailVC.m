@@ -9,6 +9,7 @@
 #import "LiveJobDetailVC.h"
 #import "CustomBadge.h"  //https://github.com/ckteebe/CustomBadge
 #import "DogJob.h"
+#import "DogUser.h"
 #import "SitterListVC.h"
 
 
@@ -34,11 +35,12 @@
 	[super viewWillAppear:animated];
 	
 	[self initData];
-	[self initUI];
 }
 
 - (void)initData
 {
+	[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+	
 	if (self.job) {
 		self.lblTitle.text = self.job.jobTitle;
 		self.lblPrice.text = [NSString stringWithFormat:@"$ %.0f", self.job.jobPrice];
@@ -46,6 +48,13 @@
 		self.txtDescription.text = self.job.jobDescription;
 		self.lblStartDate.text = [commonUtils convertDateToString:self.job.jobStartDate];
 		self.lblEndDate.text = [commonUtils convertDateToString:self.job.jobEndDate];
+		
+		[DogJob fetchJob:self.job.jobID completion:^(DogJob *job) {
+			[MBProgressHUD hideHUDForView:self.view animated:YES];
+			
+			self.job = job;
+			[self initUI];
+		}];
 		
 	} else {
 		[commonUtils showAlert:@"Warning!" withMessage:@"Failed to load job detail"];
@@ -74,8 +83,24 @@
 }
 
 - (IBAction)chatListBtnTapped:(id)sender {
+	
 }
 
+- (IBAction)cancelJobButtonTapped:(id)sender {
+	[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+	
+	[[DogUser curUser] removeJob:self.job.jobID completion:^(NSError *error) {
+		[MBProgressHUD hideHUDForView:self.view animated:NO];
+		
+		if (error) {
+			[commonUtils showAlert:@"Warning" withMessage:error.localizedDescription];
+			return;
+		}
+		
+		[commonUtils showAlert:@"Success" withMessage:@"Your job removed successfully"];
+		[self.navigationController popViewControllerAnimated:YES];
+	}];
+}
 
 #pragma mark - Navigation
 
@@ -86,7 +111,7 @@
 	if ([segue.identifier isEqualToString:@"segueListUsers"]) {
 		SitterListVC *vc = (SitterListVC *)segue.destinationViewController;
 		vc.arrayUsers = self.job.appliedUsers;
-		vc.jobTitle = self.job.jobTitle;
+		vc.curJob = self.job;
 	}
 }
 

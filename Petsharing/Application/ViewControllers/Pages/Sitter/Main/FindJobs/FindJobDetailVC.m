@@ -29,6 +29,7 @@
 	IBOutlet UILabel *lblEndDate;
 
 	IBOutlet UIButton *btnApply;
+	IBOutlet UILabel *lblNoteApplied;
 }
 
 @end
@@ -71,6 +72,7 @@
 	
 	if (self.job.appliedUsers && [self.job.appliedUsers indexOfObject:[DogUser curUser].userID] != NSNotFound) {
 		[btnApply setEnabled:NO];
+		[lblNoteApplied setHidden:NO];
 	}
 }
 

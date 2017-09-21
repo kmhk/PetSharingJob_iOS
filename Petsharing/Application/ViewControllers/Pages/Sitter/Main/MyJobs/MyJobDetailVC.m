@@ -7,11 +7,27 @@
 //
 
 #import "MyJobDetailVC.h"
+#import "DogUser.h"
+#import "DogJob.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+
 
 @interface MyJobDetailVC ()
 {
+	IBOutlet UIScrollView *scrollView;
+	IBOutlet UIView *containerView;
+	
     IBOutlet UILabel *jobDescLbl;
     NSInteger ReadMoretag;
+	
+	IBOutlet UIImageView *imgViewAvatarOwner;
+	IBOutlet UILabel *lblJobTitle;
+	IBOutlet UILabel *lblJobPrice;
+	IBOutlet UILabel *lblJobAddress;
+	IBOutlet UILabel *lblJobStartDate;
+	IBOutlet UILabel *lblJobEndDate;
+	
+	DogUser *jobOwner;
 }
 
 @end
@@ -24,6 +40,46 @@
 //    [self addReadMoreStringToUILabel:jobDescLbl];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	
+	[self initUI];
+	[self initData];
+}
+
+- (void)initUI {
+	scrollView.contentSize = containerView.frame.size;
+}
+
+- (void)initData {
+	if (!self.curJob) {
+		return;
+	}
+	
+	lblJobTitle.text = self.curJob.jobTitle;
+	lblJobAddress.text = self.curJob.jobAddress;
+	jobDescLbl.text = self.curJob.jobDescription;
+	lblJobPrice.text = [NSString stringWithFormat:@"%.0f USD", self.curJob.jobPrice];
+	lblJobStartDate.text = [commonUtils convertDateToString:self.curJob.jobStartDate];
+	lblJobEndDate.text = [commonUtils convertDateToString:self.curJob.jobEndDate];
+	
+	[[FirebaseRef storageForAvatar:self.curJob.jobOwnerID] downloadURLWithCompletion:^(NSURL * _Nullable URL, NSError * _Nullable error) {
+		if (error) {
+			[commonUtils showAlert:@"Warning!" withMessage:error.localizedDescription];
+			return;
+		}
+		
+		[imgViewAvatarOwner sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"avatar5"]];
+	}];
+//	lblOwnerName.text = [NSString stringWithFormat:@"%@ %@", [DogUser curUser].strFirstName, [DogUser curUser].strLastName];
+
+	[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+	[DogUser fetchUser:self.curJob.jobOwnerID completion:^(DogUser *user) {
+		[MBProgressHUD hideHUDForView:self.view animated:NO];
+		jobOwner = user;
+	}];
+}
+
 
 - (IBAction)onChat:(UIButton*)sender
 {
@@ -33,7 +89,7 @@
 
 - (IBAction)onPhoneCall:(UIButton*) sender
 {
-    [commonUtils phoneCalling:@""];
+    [commonUtils phoneCalling:jobOwner.strPhone];
 }
 /*
 

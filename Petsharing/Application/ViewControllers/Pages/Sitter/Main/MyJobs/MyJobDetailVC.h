@@ -10,4 +10,6 @@
 
 @interface MyJobDetailVC : BaseViewController
 
+@property (nonatomic) DogJob *curJob;
+
 @end

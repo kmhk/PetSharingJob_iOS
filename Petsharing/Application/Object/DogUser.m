@@ -81,6 +81,53 @@ DogUser *gSharedUser = nil;
 	self.strCategory = category;
 }
 
+- (void)loadUser:(CompletionCallback)completion {
+	[[[FirebaseRef allUsers] child:self.userID] observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+		NSDictionary *dict = (NSDictionary *)snapshot.value;
+		if (!dict) {
+			completion(nil);
+			return;
+		}
+		
+		[self setWithDict:dict userID:self.userID];
+		completion(nil);
+	}];
+}
+
+- (void)watchingUser:(CompletionCallback)completion {
+	[[[FirebaseRef allUsers] child:self.userID] observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+		NSDictionary *dict = (NSDictionary *)snapshot.value;
+		if (!dict) {
+			completion(nil);
+			return;
+		}
+		
+		[self setWithDict:dict userID:self.userID];
+		completion(nil);
+	}];
+}
+
+- (void)removeJob:(NSString *)jobID completion:(CompletionCallback)completion {
+	if (self.postedJobIDs) {
+		[self.postedJobIDs removeObject:jobID];
+		
+		NSDictionary *dict = @{kPostedJob: self.postedJobIDs};
+		[[[FirebaseRef allUsers] child:self.userID] updateChildValues:dict withCompletionBlock:^(NSError * _Nullable error, FIRDatabaseReference * _Nonnull ref) {
+			if (error) {
+				completion(error);
+				return;
+			}
+			
+			[[FirebaseRef allJobs] updateChildValues:@{jobID: @[]} withCompletionBlock:^(NSError * _Nullable error, FIRDatabaseReference * _Nonnull ref) {
+				completion(error);
+			}];
+		}];
+		
+	} else {
+		completion(nil);
+	}
+}
+
 
 // MARK: - creation methods
 
@@ -201,6 +248,32 @@ DogUser *gSharedUser = nil;
 	
 	NSDictionary *dict = @{kPostedJob: self.postedJobIDs};
 	
+	[[[FirebaseRef allUsers] child:self.userID] updateChildValues:dict withCompletionBlock:^(NSError * _Nullable error, FIRDatabaseReference * _Nonnull ref) {
+		completion(error);
+	}];
+}
+
+
+- (void)addHiredJobID:(NSString *)jobID completion:(CompletionCallback)completion {
+	if (!self.postedJobIDs) {
+		NSDictionary *dictError = @{NSLocalizedDescriptionKey: @"broken db."};
+		
+		completion([NSError errorWithDomain:@"No Database" code:200 userInfo:dictError]);
+		return;
+	}
+	
+	[self.postedJobIDs removeObject:jobID];
+	
+	if (!self.hiredJobIDs) {
+		self.hiredJobIDs = [[NSMutableArray alloc] init];
+	}
+	
+	if ([self.hiredJobIDs indexOfObject:jobID] == NSNotFound) {
+		[self.hiredJobIDs addObject:jobID];
+	}
+	
+	NSDictionary *dict = @{kPostedJob: self.postedJobIDs,
+						   kHiredJob: self.hiredJobIDs};
 	[[[FirebaseRef allUsers] child:self.userID] updateChildValues:dict withCompletionBlock:^(NSError * _Nullable error, FIRDatabaseReference * _Nonnull ref) {
 		completion(error);
 	}];

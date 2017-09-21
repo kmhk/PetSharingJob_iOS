@@ -9,6 +9,7 @@
 #import "PastJobVC.h"
 #import "JobListTVCell.h"
 #import "PastJobDetailVC.h"
+#import "DogUser.h"
 
 
 @interface PastJobVC ()<UITableViewDelegate, UITableViewDataSource>
@@ -40,7 +41,7 @@
 #pragma mark - TableView Delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+	return ([DogUser curUser].finishedJobIDs == nil? 0: [DogUser curUser].finishedJobIDs.count);
 }
 
 - (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

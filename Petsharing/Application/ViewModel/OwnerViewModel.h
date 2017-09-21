@@ -27,5 +27,6 @@
 		completion:(CompletionCallback)completion;
 
 - (void)loadAllMyJobs:(CompletionCallback)completion;
+- (void)hireSitter:(DogUser *)sitter job:(DogJob *)job completion:(CompletionCallback)completion;
 
 @end

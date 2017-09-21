@@ -70,6 +70,9 @@
 		aboutDog:(NSString *)aboutDog
 		category:(NSString *)category;
 
+- (void)loadUser:(CompletionCallback)completion;
+- (void)watchingUser:(CompletionCallback)completion;
+
 - (void)signUp:(CompletionCallback)completion;
 - (void)login:(NSString *)email password:(NSString *)password completion:(CompletionCallback)completion;
 - (void)logout;
@@ -78,5 +81,8 @@
 
 // for job
 - (void)addPostedJobID:(NSString *)jobID completion:(CompletionCallback)completion;
+- (void)addHiredJobID:(NSString *)jobID completion:(CompletionCallback)completion;
+
+- (void)removeJob:(NSString *)jobID completion:(CompletionCallback)completion;
 
 @end

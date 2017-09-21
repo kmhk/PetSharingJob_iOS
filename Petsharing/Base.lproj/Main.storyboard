@@ -1901,7 +1901,15 @@ your self...</string>
                     </view>
                     <navigationItem key="navigationItem" id="ssR-fi-bhF"/>
                     <connections>
+                        <outlet property="containerView" destination="FjS-NN-qxV" id="wFc-8D-Qpi"/>
+                        <outlet property="imgViewAvatarOwner" destination="pey-hY-Lbb" id="JsP-9R-vAD"/>
                         <outlet property="jobDescLbl" destination="cTD-w6-lSM" id="jxy-jM-gbX"/>
+                        <outlet property="lblJobAddress" destination="dwo-uv-xIx" id="8cM-5B-dag"/>
+                        <outlet property="lblJobEndDate" destination="gsb-15-3A1" id="6Sn-BR-gQR"/>
+                        <outlet property="lblJobPrice" destination="nF3-QN-Ncm" id="FSp-MH-TiO"/>
+                        <outlet property="lblJobStartDate" destination="MfA-QV-4fd" id="0hK-UF-mVw"/>
+                        <outlet property="lblJobTitle" destination="oSS-IH-R2H" id="wy2-tK-zUT"/>
+                        <outlet property="scrollView" destination="PQn-UR-vfn" id="VHt-Uo-7ug"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BNf-g2-ncv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2407,7 +2415,7 @@ your self...</string>
                                     <outlet property="delegate" destination="NFp-bR-Jgw" id="UgG-jQ-sG1"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="2 complete jobs" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Wky-L2-Pyq">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="0 complete jobs" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Wky-L2-Pyq">
                                 <rect key="frame" x="16" y="11" width="202" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
@@ -3512,6 +3520,13 @@ EFNpZ24gb3V0A
                                                             <action selector="applyBtnTapped:" destination="YHv-ep-cyD" eventType="touchUpInside" id="pBH-dh-rUH"/>
                                                         </connections>
                                                     </button>
+                                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="You have already applied on this job" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tBn-am-myD">
+                                                        <rect key="frame" x="8" y="-6" width="334" height="21"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                        <color key="textColor" red="0.1529411765" green="0.54117647059999996" blue="0.80392156859999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             </view>
@@ -3530,6 +3545,7 @@ EFNpZ24gb3V0A
                         <outlet property="imgViewAvatar" destination="fmQ-nc-9lM" id="7uU-WA-Ead"/>
                         <outlet property="lblEndDate" destination="wle-Bk-y97" id="SZR-Zx-sZR"/>
                         <outlet property="lblJobAddress" destination="YtE-Yp-5eF" id="aGG-If-Su6"/>
+                        <outlet property="lblNoteApplied" destination="tBn-am-myD" id="Sky-ae-Upm"/>
                         <outlet property="lblOwner" destination="7c5-b6-VD1" id="vY2-zN-j2g"/>
                         <outlet property="lblStartDate" destination="18A-fl-Yca" id="qFn-fM-0Uc"/>
                         <outlet property="lblTitle" destination="oIG-f8-MTQ" id="5EC-zs-nC5"/>
@@ -3859,6 +3875,9 @@ EFNpZ24gb3V0A
                                                         <state key="normal" title="Cancel Job" backgroundImage="continue-back">
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="cancelJobButtonTapped:" destination="1Xx-ta-478" eventType="touchUpInside" id="Bio-eX-5Yy"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -4294,9 +4313,19 @@ EFNpZ24gb3V0A
                     <size key="freeformSize" width="375" height="744"/>
                     <connections>
                         <outlet property="contentView" destination="efh-Zv-JPK" id="4Ue-46-mCH"/>
+                        <outlet property="imgViewAvatarOwner" destination="1EW-Qj-QSl" id="MCy-tz-41U"/>
+                        <outlet property="imgViewAvatarSitter" destination="nfL-qq-kF2" id="zQj-3e-LFG"/>
+                        <outlet property="lblJobAddress" destination="Cjt-8W-QaI" id="Pv0-hh-otQ"/>
+                        <outlet property="lblJobEnd" destination="rcP-0u-bxA" id="Ekd-kE-WKh"/>
+                        <outlet property="lblJobPrice" destination="ovv-eP-W9T" id="naa-Sc-KCg"/>
+                        <outlet property="lblJobStart" destination="83z-N2-2no" id="bzV-Ap-eub"/>
+                        <outlet property="lblJobTitle" destination="rrs-fP-xsK" id="2un-pi-Swp"/>
+                        <outlet property="lblOwnerName" destination="bN6-it-Bff" id="CFQ-3S-OCN"/>
+                        <outlet property="lblSitterName" destination="iym-bg-4MB" id="zmW-PR-ZAI"/>
                         <outlet property="mScrollView" destination="HRY-i8-Nz3" id="5S0-4Q-DUv"/>
                         <outlet property="ratingLbl" destination="AMy-NK-9d7" id="BTa-HZ-08t"/>
                         <outlet property="starRatingView" destination="s6c-4z-BvN" id="rYf-dW-mYc"/>
+                        <outlet property="txtViewDescription" destination="vpM-TG-hsE" id="zG5-aU-FeX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TrN-7i-1aa" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4910,6 +4939,9 @@ EFNpZ24gb3V0A
                                                 <state key="normal" title="Start Job" backgroundImage="continue-back">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="startJobBtnTapped:" destination="02d-70-d4U" eventType="touchUpInside" id="nrY-DX-gRu"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -4924,7 +4956,17 @@ EFNpZ24gb3V0A
                     <size key="freeformSize" width="375" height="744"/>
                     <connections>
                         <outlet property="contentView" destination="6GH-c9-sfz" id="iQp-LO-o0H"/>
+                        <outlet property="imgViewOwner" destination="EH1-To-Lko" id="Kue-dU-s4J"/>
+                        <outlet property="imgViewSitter" destination="X4N-YD-4Sd" id="JPk-yP-LYF"/>
+                        <outlet property="lblAdress" destination="yZM-8J-ZX7" id="EcA-ea-0Nc"/>
+                        <outlet property="lblEndTime" destination="pXJ-T6-dJZ" id="sjU-8u-Kye"/>
+                        <outlet property="lblOwnerName" destination="iNW-Ml-LC8" id="7MI-N4-BKT"/>
+                        <outlet property="lblPrice" destination="RBe-kH-f6j" id="hr1-cg-FkA"/>
+                        <outlet property="lblSitterName" destination="C8a-ef-p4H" id="ZV7-nN-mkf"/>
+                        <outlet property="lblStartTime" destination="T6v-Ib-4Bm" id="2JM-zW-D5f"/>
+                        <outlet property="lblTitle" destination="eum-oz-749" id="FGB-EX-QEr"/>
                         <outlet property="mScrollView" destination="BcM-Ff-z2R" id="0wx-hU-gu7"/>
+                        <outlet property="txtViewDescription" destination="jYD-yt-enI" id="Pta-U0-cVt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="taI-sh-plb" userLabel="First Responder" sceneMemberID="firstResponder"/>

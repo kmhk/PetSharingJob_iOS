@@ -38,16 +38,6 @@
     self.delegate = self;
 	
 	self.viewModel = [[OwnerViewModel alloc] init];
-	
-	[MBProgressHUD showHUDAddedTo:self.view animated:YES];
-	[self.viewModel loadAllMyJobs:^(NSError *error) {
-		[MBProgressHUD hideHUDForView:self.view animated:YES];
-		
-		if (error) {
-			[commonUtils showAlert:@"Warning!" withMessage:error.localizedDescription];
-			return;
-		}
-	}];
 }
 
 - (void)viewWillLayoutSubviews

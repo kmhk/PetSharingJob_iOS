@@ -56,6 +56,31 @@
 	}];
 }
 
+- (void)hireSitter:(DogUser *)sitter job:(DogJob *)job completion:(CompletionCallback)completion {
+	[job hireSitter:sitter.userID completion:^(NSError *error) {
+		if (error) {
+			completion(error);
+			return;
+		}
+		
+		[[DogUser curUser] addHiredJobID:job.jobID completion:^(NSError *error) {
+			if (error) {
+				completion(error);
+				return;
+			}
+			
+			[sitter addHiredJobID:job.jobID completion:^(NSError *error) {
+				if (error) {
+					completion(error);
+					return;
+				}
+				
+				completion(nil);
+			}];
+		}];
+	}];
+}
+
 
 // private methods
 
@@ -68,6 +93,16 @@
 	if (!jobCount) {
 		completion(nil);
 		return;
+	}
+	
+	if (self.postedJobs) {
+		[self.postedJobs removeAllObjects];
+	}
+	if (self.hiredJobs) {
+		[self.hiredJobs removeAllObjects];
+	}
+	if (self.finishedJobs) {
+		[self.finishedJobs removeAllObjects];
 	}
 	
 	if ([DogUser curUser].postedJobIDs) {

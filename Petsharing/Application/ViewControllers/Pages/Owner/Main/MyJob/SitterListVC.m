@@ -10,6 +10,7 @@
 #import "MessagesTVCell.h"
 #import "StartJobVC.h"
 #import "DogUser.h"
+#import "DogJob.h"
 
 
 @interface SitterListVC ()<UITableViewDelegate, UITableViewDataSource>
@@ -37,7 +38,7 @@
 
 - (void)initData
 {
-	lblJobTitle.text = self.jobTitle;
+	lblJobTitle.text = self.curJob.jobTitle;
 	
 	if (!self.arrayUsers) {
 		return;
@@ -125,7 +126,12 @@
 
 - (void)onHire:(UIButton*)sender
 {
+	DogUser *user = users[[sender tag]];
+	
     StartJobVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"StartJobVC"];
+	vc.curJob = self.curJob;
+	vc.choosenSitter = user;
+	
     [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

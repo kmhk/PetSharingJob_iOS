@@ -33,10 +33,14 @@
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	
-	[mainTV reloadData];
-	
 	lblJobCount.text = [NSString stringWithFormat:@"%lu live tasks",
 						((ownerViewModel.hiredJobs == nil)? 0: ownerViewModel.hiredJobs.count) + ((ownerViewModel.postedJobs == nil)? 0: ownerViewModel.postedJobs.count)];
+	
+	[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+	[ownerViewModel loadAllMyJobs:^(NSError *error) {
+		[MBProgressHUD hideHUDForView:self.view animated:YES];
+		[mainTV reloadData];
+	}];
 }
 
 - (void)initData
@@ -58,6 +62,16 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
 	return 2;
+}
+
+- (nullable NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+	if (section == HIREDJOBSECTION) {
+		return @"hired";
+		
+	} else {
+		return @"posted";
+	}
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -123,12 +137,11 @@
 	if ([segue.identifier isEqualToString:@"segueJobDetail"]) {
 		LiveJobDetailVC *vc = (LiveJobDetailVC *)segue.destinationViewController;
 		
-		if ([sender section] == HIREDJOBSECTION) {
-			vc.job = ownerViewModel.hiredJobs[[sender row]];
-			
-		} else {
-			vc.job = ownerViewModel.postedJobs[[sender row]];
-		}
+		vc.job = ownerViewModel.postedJobs[[sender row]];
+		
+	} else if ([segue.identifier isEqualToString:@"segueJobEnd"]) {
+		EndJobVC *vc = (EndJobVC *)segue.destinationViewController;
+		vc.curJob = ownerViewModel.hiredJobs[[sender row]];
 	}
 }
 

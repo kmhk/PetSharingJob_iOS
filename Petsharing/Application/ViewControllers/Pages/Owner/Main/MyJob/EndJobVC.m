@@ -8,11 +8,27 @@
 
 #import "EndJobVC.h"
 #import "HCSStarRatingView.h"
+#import "DogJob.h"
+#import "DogUser.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import "OwnerTbVC.h"
+
 
 @interface EndJobVC ()
 {
     IBOutlet UIScrollView *mScrollView;
     IBOutlet UIView *contentView;
+
+	IBOutlet UILabel *lblJobTitle;
+	IBOutlet UILabel *lblJobAddress;
+	IBOutlet UILabel *lblJobPrice;
+	IBOutlet UILabel *lblJobStart;
+	IBOutlet UILabel *lblJobEnd;
+	IBOutlet UIImageView *imgViewAvatarOwner;
+	IBOutlet UILabel *lblOwnerName;
+	IBOutlet UIImageView *imgViewAvatarSitter;
+	IBOutlet UILabel *lblSitterName;
+	IBOutlet UILabel *txtViewDescription;
     IBOutlet HCSStarRatingView *starRatingView;
     IBOutlet UILabel *ratingLbl;
 }
@@ -23,13 +39,47 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self initData];
-    [self initUI];
+	
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+
+	[self initData];
+	[self initUI];
 }
 
 - (void)initData
 {
-    
+	lblJobTitle.text = self.curJob.jobTitle;
+	lblJobAddress.text = self.curJob.jobAddress;
+	txtViewDescription.text = self.curJob.jobDescription;
+	lblJobPrice.text = [NSString stringWithFormat:@"%.0f USD", self.curJob.jobPrice];
+	lblJobStart.text = [commonUtils convertDateToString:self.curJob.jobStartDate];
+	lblJobEnd.text = [commonUtils convertDateToString:self.curJob.jobEndDate];
+	
+	[[FirebaseRef storageForAvatar:[DogUser curUser].userID] downloadURLWithCompletion:^(NSURL * _Nullable URL, NSError * _Nullable error) {
+		if (error) {
+			[commonUtils showAlert:@"Warning!" withMessage:error.localizedDescription];
+			return;
+		}
+		
+		[imgViewAvatarOwner sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"avatar5"]];
+	}];
+	lblOwnerName.text = [NSString stringWithFormat:@"%@ %@", [DogUser curUser].strFirstName, [DogUser curUser].strLastName];
+	
+	// for sitter
+	[DogUser fetchUser:self.curJob.hiredUsers.firstObject completion:^(DogUser *user) {
+		[[FirebaseRef storageForAvatar:user.userID] downloadURLWithCompletion:^(NSURL * _Nullable URL, NSError * _Nullable error) {
+			if (error) {
+				[commonUtils showAlert:@"Warning!" withMessage:error.localizedDescription];
+				return;
+			}
+			
+			[imgViewAvatarSitter sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"avatar5"]];
+		}];
+		lblSitterName.text = [NSString stringWithFormat:@"%@ %@", user.strFirstName, user.strLastName];
+	}];
 }
 
 - (void)initUI

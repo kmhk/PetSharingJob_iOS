@@ -17,6 +17,8 @@
     IBOutlet UITableView *mainTV;
 	
 	IBOutlet UILabel *lblJobCount;
+	
+	BOOL bFirstTime;
 }
 
 @end
@@ -26,13 +28,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
+	bFirstTime = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
+
+	if (bFirstTime) {
+		[self initUI];
+		[self initData];
+	}
 	
-	[self initData];
-	[self initUI];
+	bFirstTime = NO;
 }
 
 - (void)initData
@@ -88,6 +95,7 @@
 {
 //	[self performSegueWithIdentifier:@"segueJobEnd" sender:indexPath];
     MyJobDetailVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MyJobDetailVC"];
+	vc.curJob = sitterViewModel.hiredJobs[indexPath.row];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

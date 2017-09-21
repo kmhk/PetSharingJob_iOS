@@ -10,4 +10,7 @@
 
 @interface StartJobVC : BaseViewController
 
+@property (nonatomic) DogJob *curJob;
+@property (nonatomic) DogUser *choosenSitter;
+
 @end
