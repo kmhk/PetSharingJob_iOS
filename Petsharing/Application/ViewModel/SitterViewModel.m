@@ -25,8 +25,14 @@
 	return self;
 }
 
+- (void)applyJobTo:(DogJob *)job completion:(CompletionCallback)completion {
+	[job addApplyUser:[DogUser curUser].userID completion:^(NSError *error) {
+		completion(error);
+	}];
+};
 
-// private methods
+
+// MARK: - private methods
 
 - (void)loadAllJobs:(CompletionCallback)completion {
 	if (self.allJobs) {

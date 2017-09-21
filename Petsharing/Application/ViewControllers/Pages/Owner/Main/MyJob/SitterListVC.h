@@ -10,4 +10,7 @@
 
 @interface SitterListVC : BaseViewController
 
+@property (nonatomic) NSArray *arrayUsers;
+@property (nonatomic) NSString *jobTitle;
+
 @end

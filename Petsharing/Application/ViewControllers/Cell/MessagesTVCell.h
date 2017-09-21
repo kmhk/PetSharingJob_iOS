@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface MessagesTVCell : UITableViewCell
 
 @property (nonatomic, strong) IBOutlet UIImageView *userPhotoIv;
@@ -18,5 +19,7 @@
 
 @property (nonatomic, strong) IBOutlet UILabel *jobTitleLbl;
 
+
+- (void)setDogUser:(DogUser *)user;
 
 @end

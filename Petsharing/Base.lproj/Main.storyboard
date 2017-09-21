@@ -3508,6 +3508,9 @@ EFNpZ24gb3V0A
                                                                 <integer key="value" value="8"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="applyBtnTapped:" destination="YHv-ep-cyD" eventType="touchUpInside" id="pBH-dh-rUH"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3522,6 +3525,7 @@ EFNpZ24gb3V0A
                     </view>
                     <navigationItem key="navigationItem" id="NLd-TR-4sG"/>
                     <connections>
+                        <outlet property="btnApply" destination="vNh-9D-j8d" id="RTx-hM-jld"/>
                         <outlet property="contentView" destination="wpu-Lb-Z1q" id="oZt-Vg-9Br"/>
                         <outlet property="imgViewAvatar" destination="fmQ-nc-9lM" id="7uU-WA-Ead"/>
                         <outlet property="lblEndDate" destination="wle-Bk-y97" id="SZR-Zx-sZR"/>
@@ -3815,7 +3819,7 @@ EFNpZ24gb3V0A
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
                                                                 <connections>
-                                                                    <segue destination="iTh-ZN-clg" kind="push" id="h1e-Aq-7yz"/>
+                                                                    <action selector="userListBtnTapped:" destination="1Xx-ta-478" eventType="touchUpInside" id="ZAO-Wo-NPn"/>
                                                                 </connections>
                                                             </button>
                                                         </subviews>
@@ -3835,7 +3839,7 @@ EFNpZ24gb3V0A
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
                                                                 <connections>
-                                                                    <segue destination="iTh-ZN-clg" kind="push" id="ITd-UB-tc4"/>
+                                                                    <action selector="chatListBtnTapped:" destination="1Xx-ta-478" eventType="touchUpInside" id="Gqh-YD-8t1"/>
                                                                 </connections>
                                                             </button>
                                                         </subviews>
@@ -3882,6 +3886,7 @@ EFNpZ24gb3V0A
                         <outlet property="lblStartDate" destination="FZQ-v6-Q7y" id="fdf-Kf-VKw"/>
                         <outlet property="lblTitle" destination="rWm-kd-ZhX" id="0Y2-tE-Fl2"/>
                         <outlet property="txtDescription" destination="F1v-Mf-cj2" id="FKj-bi-BCo"/>
+                        <segue destination="iTh-ZN-clg" kind="push" identifier="segueListUsers" id="SHv-4V-hl1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3PP-jS-YWd" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4020,6 +4025,7 @@ EFNpZ24gb3V0A
                     </view>
                     <navigationItem key="navigationItem" id="Hh0-IS-QeW"/>
                     <connections>
+                        <outlet property="lblJobTitle" destination="r4Y-pm-kLx" id="80C-go-Nqp"/>
                         <outlet property="mainTV" destination="Zx4-jP-5Gs" id="265-D8-fpo"/>
                     </connections>
                 </viewController>
@@ -5346,7 +5352,4 @@ EFNpZ24gb3V0A
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
     </simulatedMetricsContainer>
-    <inferredMetricsTieBreakers>
-        <segue reference="h1e-Aq-7yz"/>
-    </inferredMetricsTieBreakers>
 </document>

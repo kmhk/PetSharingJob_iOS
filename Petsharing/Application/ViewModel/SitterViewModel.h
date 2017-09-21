@@ -22,4 +22,6 @@
 - (void)loadAllJobs:(CompletionCallback)completion;
 - (void)loadAllMyJobs:(CompletionCallback)completion;
 
+- (void)applyJobTo:(DogJob *)job completion:(CompletionCallback)completion;
+
 @end

@@ -1474,7 +1474,6 @@
 #pragma mark - Petsharing
 - (void)phoneCalling:(NSString*) phoneNumber
 {
-    phoneNumber = @"+4255334558";
     NSURL *phoneUrl = [NSURL URLWithString:[NSString  stringWithFormat:@"telprompt:%@",phoneNumber]];
     
     if ([[UIApplication sharedApplication] canOpenURL:phoneUrl]) {

@@ -21,6 +21,7 @@
 #define kJobStart			@"startime"
 #define kJobEnd				@"endtime"
 #define kJobPrice			@"price"
+#define kJobApplyUsers		@"applyuers"
 
 
 @interface DogJob : NSObject
@@ -39,6 +40,8 @@
 
 @property (nonatomic) NSString *jobAddress;
 @property (nonatomic) CLLocationCoordinate2D jobLocation;
+
+@property (nonatomic) NSMutableArray *appliedUsers;
 
 
 // MARK: - static methods
@@ -62,5 +65,6 @@
 		   location:(CLLocationCoordinate2D)location;
 
 - (void)save:(CompletionCallback)completion;
+- (void)addApplyUser:(NSString *)userID completion:(CompletionCallback)completion;
 
 @end

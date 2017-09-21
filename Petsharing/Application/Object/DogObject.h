@@ -11,9 +11,11 @@
 
 
 @class DogJob;
+@class DogUser;
 
 
 typedef void (^CompletionCallback)(NSError *error);
+typedef void (^FetchUserCallback)(DogUser *user);
 typedef void (^FetchJobCallback)(DogJob *job);
 
 

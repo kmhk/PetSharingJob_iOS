@@ -11,6 +11,7 @@
 #import "FirebaseRef.h"
 #import "DogUser.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "SitterTbVC.h"
 
 
 @interface FindJobDetailVC ()
@@ -27,6 +28,7 @@
 	IBOutlet UILabel *lblStartDate;
 	IBOutlet UILabel *lblEndDate;
 
+	IBOutlet UIButton *btnApply;
 }
 
 @end
@@ -66,6 +68,10 @@
 	} else {
 		[commonUtils showAlert:@"Warning!" withMessage:@"Failed to load job detail"];
 	}
+	
+	if (self.job.appliedUsers && [self.job.appliedUsers indexOfObject:[DogUser curUser].userID] != NSNotFound) {
+		[btnApply setEnabled:NO];
+	}
 }
 
 - (void)initUI
@@ -73,6 +79,27 @@
     [mScrollView setContentSize:contentView.frame.size];
     
 }
+
+
+// MARK: - button action
+
+- (IBAction)applyBtnTapped:(id)sender {
+	[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+	
+	[sitterViewModel applyJobTo:self.job completion:^(NSError *error) {
+		[MBProgressHUD hideHUDForView:self.view animated:YES];
+		
+		if (error) {
+			[commonUtils showAlert:@"Warning!" withMessage:error.localizedDescription];
+			return;
+		}
+		
+		[commonUtils showAlert:@"Success" withMessage:@"You have applied to this job"];
+		
+		[btnApply setEnabled:NO];
+	}];
+}
+
 
 /*
 #pragma mark - Navigation

@@ -39,6 +39,23 @@ DogUser *gSharedUser = nil;
 }
 
 
+- (void)setWithDict:(NSDictionary *)dict userID:(NSString *)userID {
+	self.userID = userID;
+	self.userRole = [dict[kUserRole] integerValue];
+	self.strFirstName = dict[kUserFirstName];
+	self.strLastName = dict[kUserLastName];
+	self.strEmail = dict[kUserEmail];
+	self.strPhone = dict[kUserPhone];
+	self.strAboutMe = dict[kUserAboutMe];
+	self.strAboutDog = dict[kUserAboutDog];
+	self.strCategory = dict[kUserCategory];
+	self.fRate = (dict[kUserRate] != nil)? [dict[kUserRate] floatValue]: 0.0;
+	self.postedJobIDs = (dict[kPostedJob] != nil)? [NSMutableArray arrayWithArray:dict[kPostedJob]]: [[NSMutableArray alloc] init];
+	self.hiredJobIDs = (dict[kHiredJob] != nil)? [NSMutableArray arrayWithArray:dict[kHiredJob]]: [[NSMutableArray alloc] init];
+	self.finishedJobIDs = (dict[kFinishedJob] != nil)? [NSMutableArray arrayWithArray:dict[kFinishedJob]]: [[NSMutableArray alloc] init];
+};
+
+
 - (void)setWith:(NSString *)userID
 			role:(DogUserRole)role
 		  avatar:(UIImage *)avatar
@@ -66,6 +83,22 @@ DogUser *gSharedUser = nil;
 
 
 // MARK: - creation methods
+
++ (void)fetchUser:(NSString *)userID completion:(FetchUserCallback)completion {
+	[[[FirebaseRef allUsers] child:userID] observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+		NSDictionary *dict = (NSDictionary *)snapshot.value;
+		if (!dict) {
+			completion(nil);
+			return;
+		}
+		
+		DogUser *user = [[DogUser alloc] init];
+		[user setWithDict:dict userID:userID];
+		
+		completion(user);
+	}];
+}
+
 
 + (DogUser *)curUser {
 	if (gSharedUser == nil) {
@@ -115,18 +148,7 @@ DogUser *gSharedUser = nil;
 				return;
 			}
 			
-			self.userRole = [dict[kUserRole] integerValue];
-			self.strFirstName = dict[kUserFirstName];
-			self.strLastName = dict[kUserLastName];
-			self.strEmail = dict[kUserEmail];
-			self.strPhone = dict[kUserPhone];
-			self.strAboutMe = dict[kUserAboutMe];
-			self.strAboutDog = dict[kUserAboutDog];
-			self.strCategory = dict[kUserCategory];
-			self.fRate = (dict[kUserRate] != nil)? [dict[kUserRate] floatValue]: 0.0;
-			self.postedJobIDs = (dict[kPostedJob] != nil)? [NSMutableArray arrayWithArray:dict[kPostedJob]]: [[NSMutableArray alloc] init];
-			self.hiredJobIDs = (dict[kHiredJob] != nil)? [NSMutableArray arrayWithArray:dict[kHiredJob]]: [[NSMutableArray alloc] init];
-			self.finishedJobIDs = (dict[kFinishedJob] != nil)? [NSMutableArray arrayWithArray:dict[kFinishedJob]]: [[NSMutableArray alloc] init];
+			[self setWithDict:dict userID:user.uid];
 			
 			completion(nil);
 		}];

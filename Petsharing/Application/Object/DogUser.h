@@ -56,6 +56,7 @@
 + (NSArray *)dogSitterCategories;
 
 + (DogUser *)curUser;
++ (void)fetchUser:(NSString *)userID completion:(FetchUserCallback)completion;
 
 - (void)setWith:(NSString *)userID
 			role:(DogUserRole)role

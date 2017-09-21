@@ -41,6 +41,7 @@
 		self.jobStartDate = [NSDate dateWithTimeIntervalSince1970:[dict[kJobStart] doubleValue]];
 		self.jobEndDate = [NSDate dateWithTimeIntervalSince1970:[dict[kJobEnd] doubleValue]];
 		self.jobCreatedDate = [NSDate dateWithTimeIntervalSince1970:[dict[kJobCreated] doubleValue]];
+		self.appliedUsers = (dict[kJobApplyUsers] != nil)? [NSMutableArray arrayWithArray:dict[kJobApplyUsers]]: [[NSMutableArray alloc] init];
 	}
 	
 	return self;
@@ -97,7 +98,8 @@
 						  kJobCreated: @(created),
 						  kJobStart: @(start),
 						  kJobEnd: @(end),
-						  kJobPrice: @(self.jobPrice)};
+						  kJobPrice: @(self.jobPrice),
+						  kJobApplyUsers: (self.appliedUsers == nil? @[]: self.appliedUsers)};
 	NSDictionary *dict = @{self.jobID: job};
 	
 	[[FirebaseRef allJobs] updateChildValues:dict withCompletionBlock:^(NSError * _Nullable error, FIRDatabaseReference * _Nonnull ref) {
@@ -109,6 +111,28 @@
 		[[DogUser curUser] addPostedJobID:self.jobID completion:^(NSError *error) {
 			completion(error);
 		}];
+	}];
+}
+
+
+- (void)addApplyUser:(NSString *)userID completion:(CompletionCallback)completion {
+	if (!self.appliedUsers) {
+		self.appliedUsers = [[NSMutableArray alloc] init];
+	}
+	
+	if ([self.appliedUsers indexOfObject:userID] == NSNotFound) {
+		[self.appliedUsers addObject:userID];
+	}
+	
+	NSDictionary *dict = @{kJobApplyUsers: self.appliedUsers};
+	
+	[[[FirebaseRef allJobs] child:self.jobID] updateChildValues:dict withCompletionBlock:^(NSError * _Nullable error, FIRDatabaseReference * _Nonnull ref) {
+		if (error) {
+			[self.appliedUsers removeObject:userID];
+			return;
+		}
+		
+		completion(nil);
 	}];
 }
 
