@@ -19,5 +19,6 @@
 + (FIRDatabaseReference *)allChatHistory;
 + (FIRStorageReference *)storage;
 + (FIRStorageReference *)storageForAvatar:(NSString *)userID;
++ (FIRStorageReference *)storageForChat;
 
 @end

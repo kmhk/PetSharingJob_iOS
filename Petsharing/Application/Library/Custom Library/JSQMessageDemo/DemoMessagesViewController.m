@@ -18,9 +18,12 @@
 
 #import "DemoMessagesViewController.h"
 #import "JSQMessagesViewAccessoryButtonDelegate.h"
+#import <AVFoundation/AVFoundation.h>
+#import <MediaPlayer/MediaPlayer.h>
+
 
 @interface DemoMessagesViewController () <JSQMessagesViewAccessoryButtonDelegate>{
-    
+	BOOL isLoaded;
 
 }
 @end
@@ -101,14 +104,18 @@
      *
      *  self.inputToolbar.maximumHeight = 150;
      */
+	isLoaded = NO;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
 	
-	self.demoData.demoDelegate = self;
-	[self.demoData initWith:self.jobID myID:self.myID opID:self.opID];
+	if (!isLoaded) {
+		self.demoData.demoDelegate = self;
+		[self.demoData initWith:self.jobID myID:self.myID opID:self.opID];
+	}
+	isLoaded = YES;
     
     if (self.delegateModal) {
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop
@@ -368,7 +375,11 @@
 							kChatType: @(ChatTypeText),
 							kChatContent: text,
 							kChatIsRead: @(NO)};
-	[self.demoData sendMessage:dict];
+	
+	[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+	[self.demoData sendMessage:dict completion:^(NSError *error) {
+		[MBProgressHUD hideHUDForView:self.view animated:YES];
+	}];
 	
     [self finishSendingMessageAnimated:YES];
 }
@@ -381,7 +392,7 @@
                                                        delegate:self
                                               cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                          destructiveButtonTitle:nil
-                                              otherButtonTitles:NSLocalizedString(@"Send photo", nil), NSLocalizedString(@"Send location", nil), NSLocalizedString(@"Send video", nil), NSLocalizedString(@"Send video thumbnail", nil), NSLocalizedString(@"Send audio", nil), nil];
+                                              otherButtonTitles:NSLocalizedString(@"Send photo from library", nil), NSLocalizedString(@"Send photo from camera", nil), NSLocalizedString(@"Send location", nil), NSLocalizedString(@"Send video", nil), nil];
     
     [sheet showFromToolbar:self.inputToolbar];
 }
@@ -392,32 +403,33 @@
         [self.inputToolbar.contentView.textView becomeFirstResponder];
         return;
     }
-    
+	
     switch (buttonIndex) {
         case 0:
-//            [self.demoData addPhotoMediaMessage];
+		{
+			[self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary mediaType:(NSString *)kUTTypeImage];
+		}
             break;
             
         case 1:
         {
-//            __weak UICollectionView *weakView = self.collectionView;
-//            
-//            [self.demoData addLocationMediaMessageCompletion:^{
-//                [weakView reloadData];
-//            }];
+			[self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera mediaType:(NSString *)kUTTypeImage];
         }
             break;
             
         case 2:
-//            [self.demoData addVideoMediaMessage];
+		{
+			[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+			[self.demoData sendLocationMessage:[AppDelegate sharedAppDelegate].currentLocation.coordinate completion:^(NSError *error) {
+				[MBProgressHUD hideHUDForView:self.view animated:YES];
+			}];
+		}
             break;
             
         case 3:
-//            [self.demoData addVideoMediaMessageWithThumbnail];
-            break;
-            
-        case 4:
-//            [self.demoData addAudioMediaMessage];
+		{
+			[self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary mediaType:(NSString *)kUTTypeMovie];
+		}
             break;
     }
     
@@ -426,6 +438,51 @@
     [self finishSendingMessageAnimated:YES];
 }
 
+- (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType mediaType:(NSString *)mediaType {
+	UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+	picker.delegate = self;
+	picker.allowsEditing = YES;
+	picker.sourceType = sourceType;
+	picker.mediaTypes = @[mediaType];
+	
+	[self presentViewController:picker animated:YES completion:nil];
+}
+
+
+#pragma mark - UIImagePickerControllerDelegate
+
+// This method is called when an image has been chosen from the library or taken from the camera.
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+	NSString *mediaType = [info objectForKey: UIImagePickerControllerMediaType];
+	
+	if (CFStringCompare ((__bridge CFStringRef) mediaType, kUTTypeMovie, 0) == kCFCompareEqualTo) {
+		NSURL *videoUrl = (NSURL*)[info objectForKey:UIImagePickerControllerMediaURL];
+		
+		[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+		[self.demoData sendVideoMessage:videoUrl completion:^(NSError *error) {
+			[MBProgressHUD hideHUDForView:self.view animated:YES];
+		}];
+		
+	} else if (CFStringCompare ((__bridge CFStringRef) mediaType, kUTTypeImage, 0) == kCFCompareEqualTo) {
+		UIImage *image = [info valueForKey:UIImagePickerControllerEditedImage];
+		if (image) {
+			[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+			[self.demoData sendImageMessage:image completion:^(NSError *error) {
+				[MBProgressHUD hideHUDForView:self.view animated:YES];
+			}];
+		}
+	}
+	
+	[self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+	[self dismissViewControllerAnimated:YES completion:^{
+		//.. done dismissing
+	}];
+}
 
 
 #pragma mark - JSQMessages CollectionView DataSource
@@ -713,6 +770,14 @@
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"Tapped message bubble!");
+	JSQMessage *msg = self.demoData.messages[indexPath.row];
+	if (msg.isMediaMessage && [msg.media class] == [JSQVideoMediaItem class]) {
+		JSQVideoMediaItem *mediaItem = (JSQVideoMediaItem *)msg.media;
+		
+		MPMoviePlayerViewController *movieController = [[MPMoviePlayerViewController alloc] initWithContentURL:mediaItem.fileURL];
+		[self presentMoviePlayerViewControllerAnimated:movieController];
+		[movieController.moviePlayer play];
+	}
 }
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapCellAtIndexPath:(NSIndexPath *)indexPath touchLocation:(CGPoint)touchLocation
@@ -749,6 +814,9 @@
 
 - (void)reloadChatView {
 	[self.collectionView reloadData];
+	
+//	CGPoint bottomOffset = CGPointMake(0, [self.collectionView contentSize].height - self.collectionView.frame.size.height);
+//	[self.collectionView setContentOffset:bottomOffset animated:YES];
 }
 
 @end

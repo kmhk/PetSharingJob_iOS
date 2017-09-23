@@ -22,6 +22,8 @@
 
 #import "JSQMessages.h"
 
+#import "DogObject.h"
+
 /**
  *  This is for demo/testing purposes only. 
  *  This object sets up some fake model data.
@@ -84,7 +86,10 @@ typedef enum {
 
 - (void)initWith:(NSString *)jobID myID:(NSString *)myID opID:(NSString *)opID;
 
-- (void)sendMessage:(NSDictionary *)dict;
+- (void)sendMessage:(NSDictionary *)dict completion:(CompletionCallback)completion;
+- (void)sendImageMessage:(UIImage *)img completion:(CompletionCallback)completion;
+- (void)sendVideoMessage:(NSURL *)url completion:(CompletionCallback)completion;
+- (void)sendLocationMessage:(CLLocationCoordinate2D)location completion:(CompletionCallback)completion;
 
 //- (void)addPhotoMediaMessage;
 //

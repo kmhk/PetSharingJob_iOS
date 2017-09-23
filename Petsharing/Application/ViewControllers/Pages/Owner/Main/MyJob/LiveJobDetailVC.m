@@ -77,6 +77,10 @@
 }
 
 - (void)showAppliedUserBadge {
+	if (!self.job.appliedUsers || !self.job.appliedUsers.count) {
+		return;
+	}
+	
 	if (self.job.appliedUsers && self.job.appliedUsers.count) {
 		CustomBadge *badge = [CustomBadge customBadgeWithString:[NSString stringWithFormat:@"%lu", (unsigned long)self.job.appliedUsers.count]];
 		UIView *applicantView = [self.view viewWithTag:1001];
@@ -86,6 +90,10 @@
 }
 
 - (void)showMessageBadge {
+	if (!ownerViewModel.allChats || !ownerViewModel.allChats.count) {
+		return;
+	}
+	
 	CustomBadge *badge1 = [CustomBadge customBadgeWithString:[NSString stringWithFormat:@"%lu", (unsigned long)ownerViewModel.allChats.count]];
     UIView *messageView = [self.view viewWithTag:1002];
     [messageView addSubview:badge1];

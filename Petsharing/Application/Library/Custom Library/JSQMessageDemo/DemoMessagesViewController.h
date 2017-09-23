@@ -45,7 +45,9 @@
 <
 UIActionSheetDelegate,
 JSQMessagesComposerTextViewPasteDelegate,
-DemoMessageViewControllerDelegate
+DemoMessageViewControllerDelegate,
+UIImagePickerControllerDelegate,
+UINavigationControllerDelegate
 >
 
 @property (weak, nonatomic) id<JSQDemoViewControllerDelegate> delegateModal;

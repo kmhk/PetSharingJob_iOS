@@ -144,9 +144,9 @@
 }
 
 
-- (void)sendMessage:(NSDictionary *)dict {
-//	[chatHistories addObject:dict];
-//	[self parseChatEntry:dict];
+// MARK: - public methods
+
+- (void)sendMessage:(NSDictionary *)dict completion:(CompletionCallback)completion {
 	NSMutableArray *array = [NSMutableArray arrayWithArray:chatHistories];
 	[array addObject:dict];
 	
@@ -162,6 +162,7 @@
 	[[[FirebaseRef allChats] child:key] updateChildValues:dict withCompletionBlock:^(NSError * _Nullable error, FIRDatabaseReference * _Nonnull ref) {
 		if (error) {
 			[commonUtils showAlert:@"Warning!" withMessage:error.localizedDescription];
+			completion(nil);
 			return;
 		}
 		
@@ -169,9 +170,85 @@
 		[[[FirebaseRef allChatHistory] child:self.curJobID] updateChildValues:history withCompletionBlock:^(NSError * _Nullable error, FIRDatabaseReference * _Nonnull ref) {
 			if (error) {
 				[commonUtils showAlert:@"Warning!" withMessage:error.localizedDescription];
+				completion(nil);
 				return;
 			}
+			
+			completion(nil);
 		}];
+	}];
+}
+
+- (void)sendVideoMessage:(NSURL *)url completion:(CompletionCallback)completion {
+	NSDate *date = [NSDate date];
+	NSDateFormatter *format = [[NSDateFormatter alloc] init];
+	[format setDateFormat:@"yyyyMMddHHmmss"];
+	
+	NSString *fileName = [NSString stringWithFormat:@"%@_%@_%@.mov", self.chatMineID, self.chatOponentID, [format stringFromDate:date]];
+	
+	NSData *videoData = [NSData dataWithContentsOfURL:url];
+	
+	FIRStorageMetadata *meta = [[FIRStorageMetadata alloc] init];
+	meta.contentType = @"video/mov";
+	
+	// upload file to storage
+	[[[FirebaseRef storageForChat] child:fileName] putData:videoData metadata:meta completion:^(FIRStorageMetadata * _Nullable metadata, NSError * _Nullable error) {
+		if (error) {
+			completion(error);
+			return;
+		}
+		
+		NSDictionary *dict = @{ kChatFrom: self.chatMineID,
+								kChatDate: @([date timeIntervalSince1970]),
+								kChatType: @(ChatTypeMedia),
+								kChatContent: [metadata.downloadURL absoluteString],
+								kChatIsRead: @(NO)};
+		[self sendMessage:dict completion:completion];
+	}];
+}
+
+
+- (void)sendLocationMessage:(CLLocationCoordinate2D)location completion:(CompletionCallback)completion {
+	NSDate *date = [NSDate date];
+	NSDateFormatter *format = [[NSDateFormatter alloc] init];
+	[format setDateFormat:@"yyyyMMddHHmmss"];
+	
+	NSString *contents = [NSString stringWithFormat:@"%f,%f", location.latitude, location.longitude];
+	
+	NSDictionary *dict = @{ kChatFrom: self.chatMineID,
+							kChatDate: @([date timeIntervalSince1970]),
+							kChatType: @(ChatTypeLocation),
+							kChatContent: contents,
+							kChatIsRead: @(NO)};
+	[self sendMessage:dict completion:completion];
+}
+
+
+- (void)sendImageMessage:(UIImage *)img completion:(CompletionCallback)completion {
+	NSDate *date = [NSDate date];
+	NSDateFormatter *format = [[NSDateFormatter alloc] init];
+	[format setDateFormat:@"yyyyMMddHHmmss"];
+	
+	NSString *fileName = [NSString stringWithFormat:@"%@_%@_%@.jpg", self.chatMineID, self.chatOponentID, [format stringFromDate:date]];
+	
+	NSData *imgData = UIImageJPEGRepresentation(img, 1.0);
+	
+	FIRStorageMetadata *meta = [[FIRStorageMetadata alloc] init];
+	meta.contentType = @"image/jpg";
+	
+	// upload file to storage
+	[[[FirebaseRef storageForChat] child:fileName] putData:imgData metadata:meta completion:^(FIRStorageMetadata * _Nullable metadata, NSError * _Nullable error) {
+		if (error) {
+			completion(error);
+			return;
+		}
+		
+		NSDictionary *dict = @{ kChatFrom: self.chatMineID,
+								kChatDate: @([date timeIntervalSince1970]),
+								kChatType: @(ChatTypePhto),
+								kChatContent: [metadata.downloadURL absoluteString],
+								kChatIsRead: @(NO)};
+		[self sendMessage:dict completion:completion];
 	}];
 }
 
@@ -225,9 +302,63 @@
 	
 	if ([dict[kChatType] integerValue] == ChatTypeText) {
 		[self addTextMessage:dict];
+		
+	} else if ([dict[kChatType] integerValue] == ChatTypePhto) {
+		[self addPhotoMessage:dict];
+		
+	} else if ([dict[kChatType] integerValue] == ChatTypeMedia) {
+		[self addVideoMessage:dict];
+		
+	} else if ([dict[kChatType] integerValue] == ChatTypeLocation) {
+		[self addLocationMessage:dict];
 	}
 	
 	[self.demoDelegate reloadChatView];
+}
+
+- (void)addLocationMessage:(NSDictionary *)dict {
+	NSDate *date = [NSDate dateWithTimeIntervalSince1970:[dict[kChatDate] doubleValue]];
+	
+	float lat = [[[dict[kChatContent] componentsSeparatedByString:@","] firstObject] floatValue];
+	float lng = [[[dict[kChatContent] componentsSeparatedByString:@","] lastObject] floatValue];
+	CLLocation *ferryBuildingInSF = [[CLLocation alloc] initWithLatitude:lat longitude:lng];
+	
+    JSQLocationMediaItem *locationItem = [[JSQLocationMediaItem alloc] init];
+    [locationItem setLocation:ferryBuildingInSF withCompletionHandler:^{
+		[self.demoDelegate reloadChatView];
+	}];
+
+	JSQMessage *photoMessage = [[JSQMessage alloc] initWithSenderId:dict[kChatFrom]
+												  senderDisplayName:self.users[dict[kChatFrom]]
+															   date:date
+															  media:locationItem];
+	[self.messages addObject:photoMessage];
+}
+
+- (void)addVideoMessage:(NSDictionary *)dict {
+	NSURL *videoURL = [NSURL URLWithString:dict[kChatContent]];
+	NSDate *date = [NSDate dateWithTimeIntervalSince1970:[dict[kChatDate] doubleValue]];
+	
+    JSQVideoMediaItem *videoItem = [[JSQVideoMediaItem alloc] initWithFileURL:videoURL isReadyToPlay:YES];
+	JSQMessage *photoMessage = [[JSQMessage alloc] initWithSenderId:dict[kChatFrom]
+												  senderDisplayName:self.users[dict[kChatFrom]]
+															   date:date
+															  media:videoItem];
+	[self.messages addObject:photoMessage];
+}
+
+- (void)addPhotoMessage:(NSDictionary *)dict {
+	NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:dict[kChatContent]]];
+	UIImage *img = [UIImage imageWithData:imgData];
+	
+	NSDate *date = [NSDate dateWithTimeIntervalSince1970:[dict[kChatDate] doubleValue]];
+					   
+	JSQPhotoMediaItem *photoItem = [[JSQPhotoMediaItem alloc] initWithImage:img];
+	JSQMessage *photoMessage = [[JSQMessage alloc] initWithSenderId:dict[kChatFrom]
+												  senderDisplayName:self.users[dict[kChatFrom]]
+															   date:date
+															  media:photoItem];
+    [self.messages addObject:photoMessage];
 }
 
 - (void)addTextMessage:(NSDictionary *)dict {
@@ -306,8 +437,6 @@
 //    }
 //}
 
-
-// MARK: - public methods
 
 //- (void)addAudioMediaMessage
 //{
