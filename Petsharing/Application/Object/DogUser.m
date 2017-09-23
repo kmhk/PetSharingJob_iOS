@@ -157,7 +157,7 @@ DogUser *gSharedUser = nil;
 
 
 + (NSArray *)dogSitterCategories {
-	return @[@"Dog Walking",@"Hour",@"All Day",@"Week",@"Sharing",@"Older Dog", @"Other"];
+	return @[@"Dog Walking",@"Hour",@"All Day",@"Week",@"Sharing",@"Service Dog", @"Other", @"Look After Dog"];
 }
 
 

@@ -10,6 +10,7 @@
 #import "SBPickerSelector.h"  //https://github.com/Busta117/SBPickerSelector
 #import "GoogleAutoCompleteViewController.h"
 #import "OwnerTbVC.h"
+#import "DogUser.h"
 
 
 @interface NewJobVC () <UIScrollViewDelegate, UITextFieldDelegate, UITextViewDelegate,SBPickerSelectorDelegate, GoogleAutoCompleteViewDelegate>
@@ -201,7 +202,7 @@
     
     SBPickerSelector *picker = [SBPickerSelector picker];
     
-    picker.pickerData = [@[@"Dog Walking",@"Hour",@"All Day",@"Week",@"Sharing",@"Older Dog", @"Other"] mutableCopy]; //picker content
+    picker.pickerData = [DogUser dogSitterCategories];//[@[@"Dog Walking",@"Hour",@"All Day",@"Week",@"Sharing",@"Older Dog", @"Other"] mutableCopy]; //picker content
     picker.delegate = self;
     picker.pickerType = SBPickerSelectorTypeText;
 //    picker.doneButtonTitle = @"Done";
