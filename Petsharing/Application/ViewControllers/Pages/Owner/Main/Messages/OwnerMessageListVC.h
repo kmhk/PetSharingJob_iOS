@@ -10,4 +10,6 @@
 
 @interface OwnerMessageListVC : BaseViewController
 
+@property (nonatomic) NSString *curJobID;
+
 @end

@@ -14,7 +14,7 @@
 + (void)fetchJob:(NSString *)jobID completion:(FetchJobCallback)completion {
 	[[[FirebaseRef allJobs] child:jobID] observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
 		NSDictionary *dict = (NSDictionary *)snapshot.value;
-		if (!dict) {
+		if ([dict isEqual:[NSNull null]]) {
 			completion(nil);
 			return;
 		}

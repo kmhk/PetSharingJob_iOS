@@ -25,14 +25,15 @@
 	return self;
 }
 
+
+// MARK: - public methods
+
 - (void)applyJobTo:(DogJob *)job completion:(CompletionCallback)completion {
 	[job addApplyUser:[DogUser curUser].userID completion:^(NSError *error) {
 		completion(error);
 	}];
 };
 
-
-// MARK: - private methods
 
 - (void)loadAllJobs:(CompletionCallback)completion {
 	[[FirebaseRef allJobs] observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
@@ -147,6 +148,35 @@
 		}
 	}];
 }
+
+
+- (void)loadAllChat:(CompletionCallback)completion {
+	if (!self.allChats) {
+		self.allChats = [[NSMutableArray alloc] init];
+	}
+	
+	[[[FirebaseRef allChatHistory] queryEndingAtValue:[DogUser curUser].userID] observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+		NSDictionary *dict = (NSDictionary *)snapshot.value;
+		if ([dict isEqual:[NSNull null]]) {
+			completion(nil);
+			return;
+		}
+		
+		[self.allChats removeAllObjects];
+		
+		for (NSString *jobID in dict.allKeys) {
+			NSDictionary *chatNode = dict[jobID];
+			NSString *chatNodeID = chatNode.allKeys.firstObject;
+			[self.allChats addObject:@{@"jobID": jobID,
+									   @"chatNodeID": chatNodeID}];
+		}
+		
+		completion(nil);
+	}];
+}
+
+
+// MARK: - private methods
 
 - (void)addPostedJob:(DogJob *)job {
 	if (!self.postedJobs) {

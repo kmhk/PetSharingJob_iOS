@@ -15,6 +15,8 @@
 
 + (FIRDatabaseReference *)allUsers;
 + (FIRDatabaseReference *)allJobs;
++ (FIRDatabaseReference *)allChats;
++ (FIRDatabaseReference *)allChatHistory;
 + (FIRStorageReference *)storage;
 + (FIRStorageReference *)storageForAvatar:(NSString *)userID;
 

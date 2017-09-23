@@ -82,6 +82,63 @@
 }
 
 
+- (void)loadAllChat:(CompletionCallback)completion {
+	if (!self.allChats) {
+		self.allChats = [[NSMutableArray alloc] init];
+	}
+	
+	NSString *key = [NSString stringWithFormat:@"%@+", [DogUser curUser].userID];
+	
+	[[[FirebaseRef allChatHistory] queryEndingAtValue:key] observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+		NSDictionary *dict = (NSDictionary *)snapshot.value;
+		if ([dict isEqual:[NSNull null]]) {
+			completion(nil);
+			return;
+		}
+		
+		[self.allChats removeAllObjects];
+		
+		for (NSString *jobID in dict.allKeys) {
+			NSDictionary *chatNode = dict[jobID];
+			NSString *chatNodeID = chatNode.allKeys.firstObject;
+			[self.allChats addObject:@{@"jobID": jobID,
+									   @"chatNodeID": chatNodeID}];
+		}
+		
+		completion(nil);
+	}];
+
+}
+
+
+- (void)loadAllChat:(NSString *)jobID completion:(CompletionCallback)completion {
+	if (!self.allChats) {
+		self.allChats = [[NSMutableArray alloc] init];
+	}
+	[self.allChats removeAllObjects];
+	
+	NSString *key = [NSString stringWithFormat:@"%@+", [DogUser curUser].userID];
+	
+	FIRDatabaseReference *ref;
+	ref = [[FirebaseRef allChatHistory] child:jobID];
+	
+	[[ref queryEndingAtValue:key] observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+		NSDictionary *dict = (NSDictionary *)snapshot.value;
+		if ([dict isEqual:[NSNull null]]) {
+			completion(nil);
+			return;
+		}
+		
+		for (NSString *chatNodeID in dict.allKeys) {
+			[self.allChats addObject:@{@"jobID": jobID,
+									   @"chatNodeID": chatNodeID}];
+		}
+		
+		completion(nil);
+	}];
+}
+
+
 // private methods
 
 - (void)loadAllMyJobs:(CompletionCallback)completion {

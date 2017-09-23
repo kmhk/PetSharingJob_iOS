@@ -84,6 +84,9 @@
 - (IBAction)onChat:(UIButton*)sender
 {
     DemoMessagesViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"DemoMessagesViewController"];
+	vc.jobID = self.curJob.jobID;
+	vc.myID = [DogUser curUser].userID;
+	vc.opID = self.curJob.jobOwnerID;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

@@ -114,8 +114,14 @@
 
 - (void)onChat:(UIButton*)sender
 {
+	DogUser *user = users[[sender tag]];
+	
     DemoMessagesViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"DemoMessagesViewController"];
-    [self.navigationController pushViewController:vc animated:YES];
+	vc.jobID = self.curJob.jobID;
+	vc.myID = [DogUser curUser].userID;
+	vc.opID = user.userID;
+	
+	[self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)onPhoneCall:(UIButton*) sender

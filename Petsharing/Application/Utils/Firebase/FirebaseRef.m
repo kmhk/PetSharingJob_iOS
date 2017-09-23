@@ -19,6 +19,14 @@
 	return [[[FIRDatabase database] reference] child:@"Jobs"];
 }
 
++ (FIRDatabaseReference *)allChats {
+	return [[[FIRDatabase database] reference] child:@"ChatChannel"];
+}
+
++ (FIRDatabaseReference *)allChatHistory {
+	return [[[FIRDatabase database] reference] child:@"ChatHistory"];
+}
+
 + (FIRStorageReference *)storage {
 	return [[FIRStorage storage] referenceForURL:@"gs://petsharing-b6a1d.appspot.com"];
 }

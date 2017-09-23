@@ -14,6 +14,8 @@
 @property (nonatomic) NSMutableArray *hiredJobs;
 @property (nonatomic) NSMutableArray *finishedJobs;
 
+@property (nonatomic) NSMutableArray *allChats;
+
 
 - (void)postNewJob:(NSString *)title
 	   description:(NSString *)description
@@ -28,5 +30,8 @@
 
 - (void)loadAllMyJobs:(CompletionCallback)completion;
 - (void)hireSitter:(DogUser *)sitter job:(DogJob *)job completion:(CompletionCallback)completion;
+
+- (void)loadAllChat:(CompletionCallback)completion;
+- (void)loadAllChat:(NSString *)jobID completion:(CompletionCallback)completion;
 
 @end

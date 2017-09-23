@@ -53,7 +53,7 @@
      *  Load up our fake data for the demo
      */
     self.demoData = [[DemoModelData alloc] init];
-    
+	
 
     /**
      *  Set up message accessory button delegate and configuration
@@ -106,6 +106,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+	
+	self.demoData.demoDelegate = self;
+	[self.demoData initWith:self.jobID myID:self.myID opID:self.opID];
     
     if (self.delegateModal) {
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop
@@ -181,8 +184,8 @@
     JSQMessage *copyMessage = [[self.demoData.messages lastObject] copy];
     
     if (!copyMessage) {
-        copyMessage = [JSQMessage messageWithSenderId:kJSQDemoAvatarIdJobs
-                                          displayName:kJSQDemoAvatarDisplayNameJobs
+        copyMessage = [JSQMessage messageWithSenderId:/*kJSQDemoAvatarIdJobs*/self.myID
+                                          displayName:/*kJSQDemoAvatarDisplayNameJobs*/self.myID
                                                  text:@"First received!"];
     }
     
@@ -353,13 +356,20 @@
 
     // [JSQSystemSoundPlayer jsq_playMessageSentSound];
     
-    JSQMessage *message = [[JSQMessage alloc] initWithSenderId:senderId
-                                             senderDisplayName:senderDisplayName
-                                                          date:date
-                                                          text:text];
-    
-    [self.demoData.messages addObject:message];
-    
+//    JSQMessage *message = [[JSQMessage alloc] initWithSenderId:senderId
+//                                             senderDisplayName:senderDisplayName
+//                                                          date:date
+//                                                          text:text];
+//    
+//    [self.demoData.messages addObject:message];
+	double interval = [[NSDate date] timeIntervalSince1970];
+	NSDictionary *dict = @{ kChatFrom: senderId,
+							kChatDate: @(interval),
+							kChatType: @(ChatTypeText),
+							kChatContent: text,
+							kChatIsRead: @(NO)};
+	[self.demoData sendMessage:dict];
+	
     [self finishSendingMessageAnimated:YES];
 }
 
@@ -385,29 +395,29 @@
     
     switch (buttonIndex) {
         case 0:
-            [self.demoData addPhotoMediaMessage];
+//            [self.demoData addPhotoMediaMessage];
             break;
             
         case 1:
         {
-            __weak UICollectionView *weakView = self.collectionView;
-            
-            [self.demoData addLocationMediaMessageCompletion:^{
-                [weakView reloadData];
-            }];
+//            __weak UICollectionView *weakView = self.collectionView;
+//            
+//            [self.demoData addLocationMediaMessageCompletion:^{
+//                [weakView reloadData];
+//            }];
         }
             break;
             
         case 2:
-            [self.demoData addVideoMediaMessage];
+//            [self.demoData addVideoMediaMessage];
             break;
             
         case 3:
-            [self.demoData addVideoMediaMessageWithThumbnail];
+//            [self.demoData addVideoMediaMessageWithThumbnail];
             break;
             
         case 4:
-            [self.demoData addAudioMediaMessage];
+//            [self.demoData addAudioMediaMessage];
             break;
     }
     
@@ -421,11 +431,16 @@
 #pragma mark - JSQMessages CollectionView DataSource
 
 - (NSString *)senderId {
-    return kJSQDemoAvatarIdSquires;
+    return self.myID;
 }
 
 - (NSString *)senderDisplayName {
-    return kJSQDemoAvatarDisplayNameSquires;
+	NSString *name = @"";
+	if (self.demoData && self.demoData.users) {
+		name = self.demoData.users[self.myID];
+	}
+	
+    return name;
 }
 
 - (id<JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -728,6 +743,12 @@
 - (void)messageView:(JSQMessagesCollectionView *)view didTapAccessoryButtonAtIndexPath:(NSIndexPath *)path
 {
     NSLog(@"Tapped accessory button!");
+}
+
+#pragma mark - DemoMesasgeViewControllerDelegate methods
+
+- (void)reloadChatView {
+	[self.collectionView reloadData];
 }
 
 @end

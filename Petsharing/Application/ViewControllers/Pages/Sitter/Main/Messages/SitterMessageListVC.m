@@ -8,6 +8,10 @@
 
 #import "SitterMessageListVC.h"
 #import "MessagesTVCell.h"
+#import "SitterTbVC.h"
+#import "DogUser.h"
+#import "DogJob.h"
+
 
 @interface SitterMessageListVC ()<UITableViewDelegate, UITableViewDataSource>
 {
@@ -25,7 +29,9 @@
 
 - (void)initData
 {
-    
+    [sitterViewModel loadAllChat:^(NSError *error) {
+		[mainTV reloadData];
+	}];
 }
 
 - (void)initUI
@@ -36,7 +42,7 @@
 #pragma mark - TableView Delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 15;
+    return sitterViewModel.allChats.count;
 }
 
 - (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -52,21 +58,37 @@
     } else {
         [cell setBackgroundColor:appController.appRowGreyColor];
     }
-    
+	
+	NSDictionary *dict = sitterViewModel.allChats[indexPath.row];
+	NSString *opUserID = [[dict[@"chatNodeID"] componentsSeparatedByString:@"+"] firstObject];
+	[cell setJobID:dict[@"jobID"] opUserID:opUserID];
+	
+	[cell.chatBtn setTag:indexPath.row];
     [cell.chatBtn addTarget:self action:@selector(onChat:) forControlEvents:UIControlEventTouchUpInside];
+	
+	[cell.phoneCallBtn setTag:indexPath.row];
     [cell.phoneCallBtn addTarget:self action:@selector(onPhoneCall:) forControlEvents:UIControlEventTouchUpInside];
+	
     return cell;
 }
 
 - (void)onChat:(UIButton*)sender
 {
+	MessagesTVCell *cell = [mainTV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
+	
     DemoMessagesViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"DemoMessagesViewController"];
+	vc.jobID = cell.curJob.jobID;
+	vc.myID = [DogUser curUser].userID;
+	vc.opID = cell.opUser.userID;
+	
     [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)onPhoneCall:(UIButton*) sender
 {
-    [commonUtils phoneCalling:@""];
+	MessagesTVCell *cell = [mainTV cellForRowAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:0]];
+	
+    [commonUtils phoneCalling:cell.opUser.strPhone];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

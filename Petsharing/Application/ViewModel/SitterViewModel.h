@@ -16,6 +16,8 @@
 
 @property (nonatomic) NSMutableArray *allJobs;
 
+@property (nonatomic) NSMutableArray *allChats;
+
 
 // public methods
 
@@ -23,5 +25,7 @@
 - (void)loadAllMyJobs:(CompletionCallback)completion;
 
 - (void)applyJobTo:(DogJob *)job completion:(CompletionCallback)completion;
+
+- (void)loadAllChat:(CompletionCallback)completion;
 
 @end

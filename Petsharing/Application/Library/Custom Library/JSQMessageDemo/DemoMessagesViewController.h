@@ -26,6 +26,7 @@
 
 @class DemoMessagesViewController;
 
+
 @protocol JSQDemoViewControllerDelegate <NSObject>
 
 - (void)didDismissJSQDemoViewController:(DemoMessagesViewController *)vc;
@@ -33,13 +34,28 @@
 @end
 
 
+@protocol DemoMessageViewControllerDelegate <NSObject>
+
+- (void)reloadChatView;
+
+@end
 
 
-@interface DemoMessagesViewController : JSQMessagesViewController <UIActionSheetDelegate, JSQMessagesComposerTextViewPasteDelegate>
+@interface DemoMessagesViewController : JSQMessagesViewController
+<
+UIActionSheetDelegate,
+JSQMessagesComposerTextViewPasteDelegate,
+DemoMessageViewControllerDelegate
+>
 
 @property (weak, nonatomic) id<JSQDemoViewControllerDelegate> delegateModal;
 
 @property (strong, nonatomic) DemoModelData *demoData;
+
+@property (nonatomic) NSString *jobID;
+@property (nonatomic) NSString *myID;
+@property (nonatomic) NSString *opID;
+
 
 - (void)receiveMessagePressed:(UIBarButtonItem *)sender;
 

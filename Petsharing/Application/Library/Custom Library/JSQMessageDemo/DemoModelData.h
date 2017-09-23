@@ -28,15 +28,33 @@
  *  Do not actually do anything like this.
  */
 
-static NSString * const kJSQDemoAvatarDisplayNameSquires = @"Jesse Squires";
-static NSString * const kJSQDemoAvatarDisplayNameCook = @"Tim Cook";
-static NSString * const kJSQDemoAvatarDisplayNameJobs = @"Jobs";
-static NSString * const kJSQDemoAvatarDisplayNameWoz = @"Steve Wozniak";
+//static NSString * const kJSQDemoAvatarDisplayNameSquires = @"Jesse Squires";
+//static NSString * const kJSQDemoAvatarDisplayNameCook = @"Tim Cook";
+//static NSString * const kJSQDemoAvatarDisplayNameJobs = @"Jobs";
+//static NSString * const kJSQDemoAvatarDisplayNameWoz = @"Steve Wozniak";
+//
+//static NSString * const kJSQDemoAvatarIdSquires = @"053496-4509-289";
+//static NSString * const kJSQDemoAvatarIdCook = @"468-768355-23123";
+//static NSString * const kJSQDemoAvatarIdJobs = @"707-8956784-57";
+//static NSString * const kJSQDemoAvatarIdWoz = @"309-41802-93823";
 
-static NSString * const kJSQDemoAvatarIdSquires = @"053496-4509-289";
-static NSString * const kJSQDemoAvatarIdCook = @"468-768355-23123";
-static NSString * const kJSQDemoAvatarIdJobs = @"707-8956784-57";
-static NSString * const kJSQDemoAvatarIdWoz = @"309-41802-93823";
+
+#define kChatFrom				@"from"
+#define kChatDate				@"date"
+#define kChatType				@"type"
+#define kChatContent			@"content"
+#define kChatIsRead				@"isread"
+
+
+typedef enum {
+	ChatTypeText				= 0,
+	ChatTypePhto,
+	ChatTypeMedia,
+	ChatTypeLocation
+} ChatType;
+
+
+@protocol DemoMessageViewControllerDelegate;
 
 
 
@@ -52,14 +70,30 @@ static NSString * const kJSQDemoAvatarIdWoz = @"309-41802-93823";
 
 @property (strong, nonatomic) NSDictionary *users;
 
-- (void)addPhotoMediaMessage;
 
-- (void)addLocationMediaMessageCompletion:(JSQLocationMediaItemCompletionBlock)completion;
+@property (nonatomic) id<DemoMessageViewControllerDelegate> demoDelegate;
 
-- (void)addVideoMediaMessage;
+@property (nonatomic) NSString *curJobID;
 
-- (void)addVideoMediaMessageWithThumbnail;
+@property (nonatomic) NSString *chatMineID;
+@property (nonatomic) NSString *chatOponentID;
 
-- (void)addAudioMediaMessage;
+@property (nonatomic) NSString *chatMyName;
+@property (nonatomic) NSString *chatOponentName;
+
+
+- (void)initWith:(NSString *)jobID myID:(NSString *)myID opID:(NSString *)opID;
+
+- (void)sendMessage:(NSDictionary *)dict;
+
+//- (void)addPhotoMediaMessage;
+//
+//- (void)addLocationMediaMessageCompletion:(JSQLocationMediaItemCompletionBlock)completion;
+//
+//- (void)addVideoMediaMessage;
+//
+//- (void)addVideoMediaMessageWithThumbnail;
+//
+//- (void)addAudioMediaMessage;
 
 @end

@@ -8,6 +8,7 @@
 
 #import "MessagesTVCell.h"
 #import "DogUser.h"
+#import "DogJob.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
 
@@ -35,6 +36,38 @@
 	}];
 	
 	self.userNameLbl.text = [NSString stringWithFormat:@"%@ %@", user.strFirstName, user.strLastName];
+}
+
+- (void)setJobID:(NSString *)jobID opUserID:(NSString *)opUserID {
+	[self.phoneCallBtn setEnabled:NO];
+	[self.chatBtn setEnabled:NO];
+	
+	[DogJob fetchJob:jobID completion:^(DogJob *job) {
+		if (job == nil) {
+			return;
+		}
+		
+		self.curJob = job;
+		
+		self.jobTitleLbl.text = job.jobTitle;
+		
+		// check if it is hired
+		if (job.hiredUsers && job.hiredUsers.count > 0) {
+			[self.hireBtn setEnabled:NO];
+		}
+		
+		[DogUser fetchUser:opUserID completion:^(DogUser *user) {
+			if (user == nil) {
+				return;
+			}
+			self.opUser = user;
+			
+			[self.phoneCallBtn setEnabled:YES];
+			[self.chatBtn setEnabled:YES];
+			
+			[self setDogUser:user];
+		}];
+	}];
 }
 
 @end

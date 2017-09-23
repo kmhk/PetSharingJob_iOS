@@ -11,6 +11,7 @@
 #import "DogJob.h"
 #import "DogUser.h"
 #import "SitterListVC.h"
+#import "OwnerTbVC.h"
 
 
 @interface LiveJobDetailVC ()
@@ -53,7 +54,11 @@
 			[MBProgressHUD hideHUDForView:self.view animated:YES];
 			
 			self.job = job;
-			[self initUI];
+			[self showAppliedUserBadge];
+		}];
+		
+		[ownerViewModel loadAllChat:self.job.jobID completion:^(NSError *error) {
+			[self showMessageBadge];
 		}];
 		
 	} else {
@@ -63,18 +68,32 @@
 
 - (void) initUI
 {
-	if (self.job.appliedUsers && self.job.appliedUsers.count) {
-		CustomBadge *badge = [CustomBadge customBadgeWithString:[NSString stringWithFormat:@"%lu", (unsigned long)self.job.appliedUsers.count]];
-		UIView *applicantView = [self.view viewWithTag:1001];
-		[applicantView addSubview:badge];
-		[commonUtils moveView:badge withMoveX:90 withMoveY:0];
-	}
+	
 //
 //    CustomBadge *badge1 = [CustomBadge customBadgeWithString:@"3"];
 //    UIView *messageView = [self.view viewWithTag:1002];
 //    [messageView addSubview:badge1];
 //    [commonUtils moveView:badge1 withMoveX:90 withMoveY:0];
 }
+
+- (void)showAppliedUserBadge {
+	if (self.job.appliedUsers && self.job.appliedUsers.count) {
+		CustomBadge *badge = [CustomBadge customBadgeWithString:[NSString stringWithFormat:@"%lu", (unsigned long)self.job.appliedUsers.count]];
+		UIView *applicantView = [self.view viewWithTag:1001];
+		[applicantView addSubview:badge];
+		[commonUtils moveView:badge withMoveX:90 withMoveY:0];
+	}
+}
+
+- (void)showMessageBadge {
+	CustomBadge *badge1 = [CustomBadge customBadgeWithString:[NSString stringWithFormat:@"%lu", (unsigned long)ownerViewModel.allChats.count]];
+    UIView *messageView = [self.view viewWithTag:1002];
+    [messageView addSubview:badge1];
+    [commonUtils moveView:badge1 withMoveX:90 withMoveY:0];
+}
+
+
+// MARK: - button action
 
 - (IBAction)userListBtnTapped:(id)sender {
 	if (self.job.appliedUsers && self.job.appliedUsers.count) {
@@ -83,7 +102,9 @@
 }
 
 - (IBAction)chatListBtnTapped:(id)sender {
-	
+	if (self.job.appliedUsers && self.job.appliedUsers.count) {
+		[self performSegueWithIdentifier:@"segueListUsers" sender:nil];
+	}
 }
 
 - (IBAction)cancelJobButtonTapped:(id)sender {

@@ -20,6 +20,12 @@
 @property (nonatomic, strong) IBOutlet UILabel *jobTitleLbl;
 
 
+// for message list vc only
+@property (nonatomic) DogJob *curJob;
+@property (nonatomic) DogUser *opUser;
+
 - (void)setDogUser:(DogUser *)user;
+
+- (void)setJobID:(NSString *)jobID opUserID:(NSString *)opUserID;
 
 @end
