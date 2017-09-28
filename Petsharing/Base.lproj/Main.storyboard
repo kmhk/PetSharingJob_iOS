@@ -765,7 +765,7 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                             </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="at least 5 character long" minimumFontSize="17" id="nLq-Oq-OjK">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="at least 6 character long" minimumFontSize="17" id="nLq-Oq-OjK">
                                                 <rect key="frame" x="8" y="27" width="359" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -790,7 +790,7 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                             </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="at least 5 character long" minimumFontSize="17" id="0Vn-7Y-ZcL">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="at least 6 character long" minimumFontSize="17" id="0Vn-7Y-ZcL">
                                                 <rect key="frame" x="8" y="27" width="359" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1283,7 +1283,7 @@ your self...</string>
                                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </label>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="at least 5 character long" minimumFontSize="17" id="ZuL-1b-oSy" userLabel="PasswordText">
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="at least 6 character long" minimumFontSize="17" id="ZuL-1b-oSy" userLabel="PasswordText">
                                                         <rect key="frame" x="8" y="27" width="359" height="30"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1305,7 +1305,7 @@ your self...</string>
                                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </label>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="at least 5 character long" minimumFontSize="17" id="Ec7-kv-gIb">
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="at least 6 character long" minimumFontSize="17" id="Ec7-kv-gIb">
                                                         <rect key="frame" x="8" y="27" width="359" height="30"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2427,6 +2427,7 @@ your self...</string>
                     </view>
                     <navigationItem key="navigationItem" id="zDb-d6-16L"/>
                     <connections>
+                        <outlet property="lblStatus" destination="Wky-L2-Pyq" id="RDk-4k-0bT"/>
                         <outlet property="mainTV" destination="STb-rl-CwD" id="954-kf-xt1"/>
                     </connections>
                 </viewController>
@@ -2642,6 +2643,19 @@ your self...</string>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="W3O-cm-9Aw"/>
+                    <connections>
+                        <outlet property="imgOwner" destination="M4O-hA-vsN" id="GzZ-eH-PfA"/>
+                        <outlet property="imgSitter" destination="tI7-vy-o77" id="ncy-Rm-egL"/>
+                        <outlet property="lblDescription" destination="qgy-2w-Rbp" id="ZmI-qz-yYn"/>
+                        <outlet property="lblEndTime" destination="o7Y-tG-EFB" id="TRm-qM-rHv"/>
+                        <outlet property="lblFinishedTime" destination="ODP-pG-cgC" id="y1k-hI-p3E"/>
+                        <outlet property="lblLocation" destination="RDD-gl-jRB" id="g6T-Wk-8a0"/>
+                        <outlet property="lblOwnerName" destination="Fja-AF-o9C" id="ulM-9O-R6I"/>
+                        <outlet property="lblPrice" destination="Qdo-rl-FkK" id="Mdr-3m-M7S"/>
+                        <outlet property="lblSittername" destination="g7h-tH-fIZ" id="j3J-95-Dsn"/>
+                        <outlet property="lblStartTime" destination="Jnm-e8-7hl" id="ePz-QA-iuI"/>
+                        <outlet property="lblTitle" destination="t4n-Ep-AyR" id="ch3-4P-VD5"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dyK-1f-iuo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2941,7 +2955,7 @@ EFNpZ24gb3V0A
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Look after Fido" minimumFontSize="17" id="xNs-eQ-0Bn">
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" id="xNs-eQ-0Bn">
                                                         <rect key="frame" x="8" y="29" width="359" height="30"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                         <color key="textColor" red="0.0" green="0.61960784310000006" blue="0.89019607840000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2968,7 +2982,6 @@ EFNpZ24gb3V0A
                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" textAlignment="natural" id="o3s-L6-A0O">
                                                         <rect key="frame" x="8" y="25" width="359" height="125"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                                         <color key="textColor" red="0.0" green="0.61960784310000006" blue="0.89019607840000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -3125,7 +3138,7 @@ EFNpZ24gb3V0A
                                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                             </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1th Jan 2017 0:00 AM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="k18-bA-ytL">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="k18-bA-ytL">
                                                                 <rect key="frame" x="8" y="27" width="359" height="29"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
@@ -3159,7 +3172,7 @@ EFNpZ24gb3V0A
                                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                             </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1th Jan 2017 0:00 AM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="OCb-wy-FYc">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="OCb-wy-FYc">
                                                                 <rect key="frame" x="8" y="27" width="359" height="29"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
@@ -3198,7 +3211,7 @@ EFNpZ24gb3V0A
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                                 <color key="textColor" red="0.0" green="0.61960784310000006" blue="0.89019607840000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                                                <textInputTraits key="textInputTraits"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                                                 <connections>
                                                                     <outlet property="delegate" destination="gXn-6x-tZg" id="GYs-CS-NXy"/>
                                                                 </connections>
@@ -3307,8 +3320,8 @@ EFNpZ24gb3V0A
                                                             <rect key="frame" x="0.0" y="4" width="15" height="15"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="1500.0 km" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rO1-32-PIF">
-                                                            <rect key="frame" x="15" y="2" width="60" height="18"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="1500.0 km" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rO1-32-PIF">
+                                                            <rect key="frame" x="15" y="-10" width="60" height="43"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                             <color key="textColor" red="0.0" green="0.61960784310000006" blue="0.89019607840000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -3323,6 +3336,7 @@ EFNpZ24gb3V0A
                                             <outlet property="jobOwnerPhotoIv" destination="xYt-7y-x4k" id="agY-xi-J99"/>
                                             <outlet property="jobStatusLbl" destination="rO1-32-PIF" id="u3E-Lz-kZA"/>
                                             <outlet property="jobTitleLbl" destination="fjr-IM-SNS" id="86V-Wu-pi3"/>
+                                            <outlet property="markLocation" destination="xg7-Ff-XNQ" id="9kY-2A-0LL"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -4292,6 +4306,9 @@ EFNpZ24gb3V0A
                                                 <state key="normal" title="Pay and End Job" backgroundImage="continue-back">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="endJob:" destination="g3r-Xf-xkI" eventType="touchUpInside" id="00Z-aG-3oJ"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Look after Friday" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rrs-fP-xsK">
                                                 <rect key="frame" x="51" y="8" width="273" height="40"/>

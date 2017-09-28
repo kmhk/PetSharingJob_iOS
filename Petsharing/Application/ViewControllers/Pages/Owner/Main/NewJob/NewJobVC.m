@@ -58,6 +58,20 @@
 	
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTappedScreen)]];
 
+	jobTitleTxt.text = @"";
+	jobDescTxtView.text = @"";
+	jobCategoryLbl.text = @"";
+	jobAddressLbl.text = @"";
+	jobStartTimeLbl.text = @"";
+	jobEndTimeLbl.text = @"";
+	jobPriceTxt.text = @"";
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	
+//	[self initUI];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -90,6 +104,7 @@
 						}
 						
 						[commonUtils showAlert:@"Success" withMessage:@"Your job posted!"];
+						[self initUI];
 	 }];
 }
 

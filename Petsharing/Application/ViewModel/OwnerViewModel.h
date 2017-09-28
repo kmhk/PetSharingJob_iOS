@@ -30,6 +30,7 @@
 
 - (void)loadAllMyJobs:(CompletionCallback)completion;
 - (void)hireSitter:(DogUser *)sitter job:(DogJob *)job completion:(CompletionCallback)completion;
+- (void)finishJob:(DogUser *)sitter job:(DogJob *)job completion:(CompletionCallback)completion;
 
 - (void)loadAllChat:(CompletionCallback)completion;
 - (void)loadAllChat:(NSString *)jobID completion:(CompletionCallback)completion;

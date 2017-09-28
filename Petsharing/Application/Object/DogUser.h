@@ -82,6 +82,7 @@
 // for job
 - (void)addPostedJobID:(NSString *)jobID completion:(CompletionCallback)completion;
 - (void)addHiredJobID:(NSString *)jobID completion:(CompletionCallback)completion;
+- (void)addCompletedJob:(NSString *)jobID completion:(CompletionCallback)completion;
 
 - (void)removeJob:(NSString *)jobID completion:(CompletionCallback)completion;
 

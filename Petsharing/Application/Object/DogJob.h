@@ -23,6 +23,8 @@
 #define kJobPrice			@"price"
 #define kJobApplyUsers		@"applyuers"
 #define kJobHiredUsers		@"hiredusers"
+#define kJobCompleted		@"iscompleted"
+#define kJobFinished		@"finishedtime"
 
 
 @interface DogJob : NSObject
@@ -44,6 +46,9 @@
 
 @property (nonatomic) NSMutableArray *appliedUsers;
 @property (nonatomic) NSMutableArray *hiredUsers;
+
+@property (nonatomic) BOOL isCompleted;
+@property (nonatomic) NSDate *jobFinishedDate;
 
 
 // MARK: - static methods
@@ -69,5 +74,6 @@
 - (void)save:(CompletionCallback)completion;
 - (void)addApplyUser:(NSString *)userID completion:(CompletionCallback)completion;
 - (void)hireSitter:(NSString *)sitterID completion:(CompletionCallback)completion;
+- (void)finishJob:(CompletionCallback)completion;
 
 @end

@@ -10,4 +10,6 @@
 
 @interface PastJobDetailVC : BaseViewController
 
+@property (nonatomic) NSString *jobID;
+
 @end

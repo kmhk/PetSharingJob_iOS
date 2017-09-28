@@ -15,6 +15,7 @@
 @interface PastJobVC ()<UITableViewDelegate, UITableViewDataSource>
 {
     IBOutlet UITableView *mainTV;
+	IBOutlet UILabel *lblStatus;
     
 }
 
@@ -24,18 +25,26 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self initData];
-    [self initUI];
+	
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	
+	[self initData];
+	[self initUI];
 }
 
 - (void)initData
 {
-    
+    [[DogUser curUser] loadUser:^(NSError *error) {
+		[mainTV reloadData];
+	}];
 }
 
 - (void)initUI
 {
-    
+	lblStatus.text = [NSString stringWithFormat:@"%lu complete jobs", (unsigned long)([DogUser curUser].finishedJobIDs == nil? 0: [DogUser curUser].finishedJobIDs.count)];
 }
 
 #pragma mark - TableView Delegate
@@ -57,6 +66,8 @@
     } else {
         [cell setBackgroundColor:[UIColor colorWithHex:@"#f1f1f1" alpha:1.0f]];
     }
+	
+	[cell setJobID:[DogUser curUser].finishedJobIDs[indexPath.row]];
     
     return cell;
 }
@@ -64,6 +75,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     PastJobDetailVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"PastJobDetailVC"];
+	vc.jobID = [DogUser curUser].finishedJobIDs[indexPath.row];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

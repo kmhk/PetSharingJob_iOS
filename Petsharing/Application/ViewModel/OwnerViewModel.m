@@ -81,6 +81,27 @@
 	}];
 }
 
+- (void)finishJob:(DogUser *)sitter job:(DogJob *)job completion:(CompletionCallback)completion
+{
+	[job finishJob:^(NSError *error) {
+		if (error) {
+			completion(error);
+			return;
+		}
+		
+		[[DogUser curUser] addCompletedJob:job.jobID completion:^(NSError *error) {
+			if (error) {
+				completion(error);
+				return;
+			}
+			
+			[sitter addCompletedJob:job.jobID completion:^(NSError *error) {
+				completion(error);
+			}];
+		}];
+	}];
+}
+
 
 - (void)loadAllChat:(CompletionCallback)completion {
 	if (!self.allChats) {

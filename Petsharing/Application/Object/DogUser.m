@@ -84,7 +84,7 @@ DogUser *gSharedUser = nil;
 - (void)loadUser:(CompletionCallback)completion {
 	[[[FirebaseRef allUsers] child:self.userID] observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
 		NSDictionary *dict = (NSDictionary *)snapshot.value;
-		if (!dict) {
+		if ([dict isEqual:[NSNull null]]) {
 			completion(nil);
 			return;
 		}
@@ -97,7 +97,7 @@ DogUser *gSharedUser = nil;
 - (void)watchingUser:(CompletionCallback)completion {
 	[[[FirebaseRef allUsers] child:self.userID] observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
 		NSDictionary *dict = (NSDictionary *)snapshot.value;
-		if (!dict) {
+		if ([dict isEqual:[NSNull null]]) {
 			completion(nil);
 			return;
 		}
@@ -188,7 +188,7 @@ DogUser *gSharedUser = nil;
 		self.userID = user.uid;
 		[[[FirebaseRef allUsers] child:self.userID] observeSingleEventOfType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
 			NSDictionary *dict = (NSDictionary *)snapshot.value;
-			if (!dict) {
+			if ([dict isEqual:[NSNull null]]) {
 				NSDictionary *dictError = @{NSLocalizedDescriptionKey: @"No existing dog user in db."};
 				
 				completion([NSError errorWithDomain:@"No Database" code:200 userInfo:dictError]);
@@ -210,7 +210,8 @@ DogUser *gSharedUser = nil;
 
 - (void)save:(CompletionCallback)completion {
 	// store avatar image first
-	NSData *imgData = UIImageJPEGRepresentation(self.dogAvatar, 1.0);
+	NSData *imgData = UIImagePNGRepresentation(self.dogAvatar);
+//	NSData *imgData = UIImageJPEGRepresentation(self.dogAvatar, 1.0);
 	
 	FIRStorageMetadata *meta = [[FIRStorageMetadata alloc] init];
 	meta.contentType = @"image/jpg";
@@ -278,5 +279,32 @@ DogUser *gSharedUser = nil;
 		completion(error);
 	}];
 }
+
+
+- (void)addCompletedJob:(NSString *)jobID completion:(CompletionCallback)completion {
+	if (!self.postedJobIDs) {
+		NSDictionary *dictError = @{NSLocalizedDescriptionKey: @"broken db."};
+		
+		completion([NSError errorWithDomain:@"No Database" code:200 userInfo:dictError]);
+		return;
+	}
+	
+	[self.hiredJobIDs removeObject:jobID];
+	
+	if (!self.finishedJobIDs) {
+		self.finishedJobIDs = [[NSMutableArray alloc] init];
+	}
+	
+	if ([self.finishedJobIDs indexOfObject:jobID] == NSNotFound) {
+		[self.finishedJobIDs addObject:jobID];
+	}
+	
+	NSDictionary *dict = @{kHiredJob: self.hiredJobIDs,
+						   kFinishedJob: self.finishedJobIDs};
+	[[[FirebaseRef allUsers] child:self.userID] updateChildValues:dict withCompletionBlock:^(NSError * _Nullable error, FIRDatabaseReference * _Nonnull ref) {
+		completion(error);
+	}];
+}
+
 
 @end

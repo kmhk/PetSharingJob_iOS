@@ -45,4 +45,43 @@
 	}
 }
 
+- (void)setJob:(DogJob *)job arrangedType:(NSInteger)type {
+	[[FirebaseRef storageForAvatar:job.jobOwnerID] downloadURLWithCompletion:^(NSURL * _Nullable URL, NSError * _Nullable error) {
+		
+		[self.jobOwnerPhotoIv sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"avatar5"]];
+	}];
+	
+	self.jobTitleLbl.text = job.jobTitle;
+	
+	if (type == 0) { // by time
+		self.jobStatusLbl.text = [commonUtils convertDateToString:job.jobCreatedDate];
+		self.markLocation.hidden = YES;
+		
+	} else if (type == 1) { // by price
+		self.jobStatusLbl.text = [NSString stringWithFormat:@"$ %.0f", job.jobPrice];
+		self.markLocation.hidden = YES;
+		
+	} else { // by distance
+		CLLocation *loc = [[CLLocation alloc] initWithLatitude:job.jobLocation.latitude longitude:job.jobLocation.longitude];
+		CLLocationDistance distance = [[AppDelegate sharedAppDelegate].currentLocation distanceFromLocation:loc];
+		
+		if (distance > 1000) {
+			self.jobStatusLbl.text = [NSString stringWithFormat:@"%.1f Km", distance/1000];
+		} else {
+			self.jobStatusLbl.text = [NSString stringWithFormat:@"%.1f m", distance];
+		}
+		self.markLocation.hidden = NO;
+	}
+}
+
+- (void)setJobID:(NSString *)jobID {
+	[DogJob fetchJob:jobID completion:^(DogJob *job) {
+		self.jobTitleLbl.text = job.jobTitle;
+		[[FirebaseRef storageForAvatar:job.jobOwnerID] downloadURLWithCompletion:^(NSURL * _Nullable URL, NSError * _Nullable error) {
+			
+			[self.jobOwnerPhotoIv sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"avatar5"]];
+		}];
+	}];
+}
+
 @end

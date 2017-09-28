@@ -13,6 +13,10 @@
 @property (strong, nonatomic) IBOutlet UILabel *jobTitleLbl;
 @property (strong, nonatomic) IBOutlet UILabel *jobStatusLbl;
 
+@property (strong, nonatomic) IBOutlet UIImageView *markLocation;
+
 - (void)setJob:(DogJob *)job;
+- (void)setJob:(DogJob *)job arrangedType:(NSInteger)type;
+- (void)setJobID:(NSString *)jobID;
 
 @end

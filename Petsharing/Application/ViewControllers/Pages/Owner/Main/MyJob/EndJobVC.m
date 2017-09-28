@@ -31,6 +31,8 @@
 	IBOutlet UILabel *txtViewDescription;
     IBOutlet HCSStarRatingView *starRatingView;
     IBOutlet UILabel *ratingLbl;
+	
+	DogUser *sitter;
 }
 
 @end
@@ -70,6 +72,8 @@
 	
 	// for sitter
 	[DogUser fetchUser:self.curJob.hiredUsers.firstObject completion:^(DogUser *user) {
+		sitter = user;
+		
 		[[FirebaseRef storageForAvatar:user.userID] downloadURLWithCompletion:^(NSURL * _Nullable URL, NSError * _Nullable error) {
 			if (error) {
 				[commonUtils showAlert:@"Warning!" withMessage:error.localizedDescription];
@@ -86,9 +90,26 @@
 {
     [mScrollView setContentSize:contentView.frame.size];
 }
+
 - (IBAction)changeStarRating:(HCSStarRatingView*)sender {
     
     [ratingLbl setText:[NSString stringWithFormat:@"%.02f", sender.value]];
+}
+
+- (IBAction)endJob:(id)sender {
+	[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+	
+	[ownerViewModel finishJob:sitter job:self.curJob completion:^(NSError *error) {
+		[MBProgressHUD hideHUDForView:self.view animated:YES];
+		
+		if (error) {
+			[commonUtils showAlert:@"Warning!" withMessage:error.localizedDescription];
+		} else {
+			[commonUtils showAlert:@"Success" withMessage:@"Job finished successfully"];
+		}
+		
+		[self.navigationController popViewControllerAnimated:YES];
+	}];
 }
 
 /*

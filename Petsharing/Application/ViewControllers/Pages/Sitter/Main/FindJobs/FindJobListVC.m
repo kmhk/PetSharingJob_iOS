@@ -119,7 +119,7 @@ typedef enum {
         [cell setBackgroundColor:[UIColor colorWithHex:@"#f1f1f1" alpha:1.0f]];
     }
 	
-	[cell setJob:sitterViewModel.allJobs[indexPath.row]];
+	[cell setJob:sitterViewModel.allJobs[indexPath.row] arrangedType:typeArrange];
     
     return cell;
 }

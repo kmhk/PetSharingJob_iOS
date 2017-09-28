@@ -1446,7 +1446,7 @@
 				TargetAttributes = {
 					5F61BF811F2E527000F1F409 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = Q8NGZS6ASA;
+						DevelopmentTeam = 4JCWJC9B77;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -1830,7 +1830,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = Q8NGZS6ASA;
+				DEVELOPMENT_TEAM = 4JCWJC9B77;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Petsharing/Application/Config/PrefixHeader.pch;
 				INFOPLIST_FILE = Petsharing/Info.plist;
@@ -1851,7 +1851,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = Q8NGZS6ASA;
+				DEVELOPMENT_TEAM = 4JCWJC9B77;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Petsharing/Application/Config/PrefixHeader.pch;
 				INFOPLIST_FILE = Petsharing/Info.plist;

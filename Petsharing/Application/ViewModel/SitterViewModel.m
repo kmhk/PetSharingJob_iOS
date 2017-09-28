@@ -38,7 +38,7 @@
 - (void)loadAllJobs:(CompletionCallback)completion {
 	[[FirebaseRef allJobs] observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
 		NSDictionary *dict = (NSDictionary *)snapshot.value;
-		if (!dict) {
+		if ([dict isEqual:[NSNull null]]) {
 			completion(nil);
 			return;
 		}
