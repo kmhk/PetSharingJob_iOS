@@ -99,6 +99,8 @@
 		[commonUtils showAlert:@"Success" withMessage:@"You have applied to this job"];
 		
 		[btnApply setEnabled:NO];
+		
+		[self.navigationController popViewControllerAnimated:YES];
 	}];
 }
 
