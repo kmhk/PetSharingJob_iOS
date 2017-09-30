@@ -105,6 +105,8 @@
 						
 						[commonUtils showAlert:@"Success" withMessage:@"Your job posted!"];
 						[self initUI];
+						
+						[self.tabBarController setSelectedIndex:1];
 	 }];
 }
 
