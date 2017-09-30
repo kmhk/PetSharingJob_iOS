@@ -177,6 +177,9 @@
 		CE14B19A1F7057C800AA9D58 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE14B1991F7057C800AA9D58 /* GoogleService-Info.plist */; };
 		CE14B1A21F705C5E00AA9D58 /* DogUser.m in Sources */ = {isa = PBXBuildFile; fileRef = CE14B1A11F705C5E00AA9D58 /* DogUser.m */; };
 		CE14B1A91F7076BD00AA9D58 /* FirebaseRef.m in Sources */ = {isa = PBXBuildFile; fileRef = CE14B1A81F7076BD00AA9D58 /* FirebaseRef.m */; };
+		CE569E9A1F8009670082793C /* JPSThumbnailAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = CE569E961F8009670082793C /* JPSThumbnailAnnotation.m */; };
+		CE569E9B1F8009670082793C /* JPSThumbnailAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE569E981F8009670082793C /* JPSThumbnailAnnotationView.m */; };
+		CE569E9C1F8009670082793C /* JPSThumnail.m in Sources */ = {isa = PBXBuildFile; fileRef = CE569E991F8009670082793C /* JPSThumnail.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -498,6 +501,12 @@
 		CE14B1A71F7076BD00AA9D58 /* FirebaseRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FirebaseRef.h; path = Utils/Firebase/FirebaseRef.h; sourceTree = "<group>"; };
 		CE14B1A81F7076BD00AA9D58 /* FirebaseRef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FirebaseRef.m; path = Utils/Firebase/FirebaseRef.m; sourceTree = "<group>"; };
 		CE14B1AD1F708E5B00AA9D58 /* DogObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DogObject.h; path = Object/DogObject.h; sourceTree = "<group>"; };
+		CE569E941F8009670082793C /* JPSThumbnail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPSThumbnail.h; sourceTree = "<group>"; };
+		CE569E951F8009670082793C /* JPSThumbnailAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPSThumbnailAnnotation.h; sourceTree = "<group>"; };
+		CE569E961F8009670082793C /* JPSThumbnailAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPSThumbnailAnnotation.m; sourceTree = "<group>"; };
+		CE569E971F8009670082793C /* JPSThumbnailAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPSThumbnailAnnotationView.h; sourceTree = "<group>"; };
+		CE569E981F8009670082793C /* JPSThumbnailAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPSThumbnailAnnotationView.m; sourceTree = "<group>"; };
+		CE569E991F8009670082793C /* JPSThumnail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPSThumnail.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -662,6 +671,7 @@
 		5F61C0881F2E5FE800F1F409 /* Custom Library */ = {
 			isa = PBXGroup;
 			children = (
+				CE569E931F8009670082793C /* JPSThumbnailAnnotation */,
 				5FD69B0A1F515CE600EFF637 /* JSQMessagesViewController */,
 				5FD69AFE1F515BA300EFF637 /* JSQMessageDemo */,
 				5FAA8DB71F4D33AB00C5ADDD /* HCSStarRatingView */,
@@ -1412,6 +1422,19 @@
 			name = Object;
 			sourceTree = "<group>";
 		};
+		CE569E931F8009670082793C /* JPSThumbnailAnnotation */ = {
+			isa = PBXGroup;
+			children = (
+				CE569E941F8009670082793C /* JPSThumbnail.h */,
+				CE569E951F8009670082793C /* JPSThumbnailAnnotation.h */,
+				CE569E961F8009670082793C /* JPSThumbnailAnnotation.m */,
+				CE569E971F8009670082793C /* JPSThumbnailAnnotationView.h */,
+				CE569E981F8009670082793C /* JPSThumbnailAnnotationView.m */,
+				CE569E991F8009670082793C /* JPSThumnail.m */,
+			);
+			path = JPSThumbnailAnnotation;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1596,6 +1619,8 @@
 				CE14B1A91F7076BD00AA9D58 /* FirebaseRef.m in Sources */,
 				5FD69B721F515CE600EFF637 /* UIImage+JSQMessages.m in Sources */,
 				5FD69B711F515CE600EFF637 /* UIColor+JSQMessages.m in Sources */,
+				CE569E9C1F8009670082793C /* JPSThumnail.m in Sources */,
+				CE569E9A1F8009670082793C /* JPSThumbnailAnnotation.m in Sources */,
 				5F61C1CE1F2E5FE800F1F409 /* DatabaseController.m in Sources */,
 				5F61C1A81F2E5FE800F1F409 /* ContactsData.m in Sources */,
 				5F61C1BF1F2E5FE800F1F409 /* LGSideMenuControllerGesturesHandler.m in Sources */,
@@ -1685,6 +1710,7 @@
 				5FC66B2D1F50563900EFDAAF /* SitterListVC.m in Sources */,
 				5FD69B961F515CE600EFF637 /* JSQMessagesToolbarContentView.m in Sources */,
 				5FD69B7B1F515CE600EFF637 /* JSQMessagesVideoThumbnailFactory.m in Sources */,
+				CE569E9B1F8009670082793C /* JPSThumbnailAnnotationView.m in Sources */,
 				5FD69B8A1F515CE600EFF637 /* JSQMessagesCollectionView.m in Sources */,
 				5F61C1C11F2E5FE800F1F409 /* UIViewController+LGSideMenuController.m in Sources */,
 				5F61C2561F2E5FE800F1F409 /* UserBaseViewController.m in Sources */,

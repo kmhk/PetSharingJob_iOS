@@ -9,10 +9,14 @@
 #import "FindJobMapVC.h"
 #import "AppDelegate.h"
 #import "SitterTbVC.h"
-#import <JPSThumbnailAnnotation/JPSThumbnail.h>
-#import <JPSThumbnailAnnotation/JPSThumbnailAnnotation.h>
+//#import <JPSThumbnailAnnotation/JPSThumbnail.h>
+//#import <JPSThumbnailAnnotation/JPSThumbnailAnnotation.h>
 #import "DogJob.h"
 #import "FindJobDetailVC.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import "DogUser.h"
+#import "JPSThumbnail.h"
+#import "JPSThumbnailAnnotation.h"
 
 
 @interface FindJobMapVC ()
@@ -66,19 +70,29 @@
 
 - (void)showJobAnnotations {
 	for (DogJob *job in sitterViewModel.allJobs) {
-		JPSThumbnail *thumbnail = [[JPSThumbnail alloc] init];
-		thumbnail.image = [UIImage imageNamed:@"mylocation"];
-		thumbnail.title = job.jobTitle;
-		thumbnail.subtitle = job.jobAddress;
-		thumbnail.coordinate = job.jobLocation;
-		thumbnail.disclosureBlock = ^{
-			NSLog(@"selected Empire");
-			FindJobDetailVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"FindJobDetailVC"];
-			vc.job = job;
-			[self.navigationController pushViewController:vc animated:YES];
-		};
-		
-		[mapView addAnnotation:[JPSThumbnailAnnotation annotationWithThumbnail:thumbnail]];
+		[[FirebaseRef storageForAvatar:job.jobOwnerID] downloadURLWithCompletion:^(NSURL * _Nullable URL, NSError * _Nullable error) {
+			if (error) {
+				[commonUtils showAlert:@"Warning!" withMessage:error.localizedDescription];
+				return;
+			}
+			
+			JPSThumbnail *thumbnail = [[JPSThumbnail alloc] init];
+			
+			NSData *imageData = [NSData dataWithContentsOfURL:URL];
+//			thumbnail.image = [UIImage imageNamed:@"mylocation"];
+			thumbnail.image = [UIImage imageWithData:imageData];
+			thumbnail.title = job.jobTitle;
+			thumbnail.subtitle = [NSString stringWithFormat:@"$%.0f/%@", job.jobPrice, [commonUtils convertDateToString:job.jobCreatedDate]];
+			thumbnail.coordinate = job.jobLocation;
+			thumbnail.disclosureBlock = ^{
+				NSLog(@"selected Empire");
+				FindJobDetailVC *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"FindJobDetailVC"];
+				vc.job = job;
+				[self.navigationController pushViewController:vc animated:YES];
+			};
+			
+			[mapView addAnnotation:[JPSThumbnailAnnotation annotationWithThumbnail:thumbnail]];
+		}];
 	}
 }
 
