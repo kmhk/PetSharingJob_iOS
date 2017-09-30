@@ -108,7 +108,7 @@
 		self.allChats = [[NSMutableArray alloc] init];
 	}
 	
-	NSString *key = [NSString stringWithFormat:@"%@+", [DogUser curUser].userID];
+	NSString *key = [NSString stringWithFormat:@"%@", [DogUser curUser].userID];
 	
 	[[[FirebaseRef allChatHistory] queryEndingAtValue:key] observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
 		NSDictionary *dict = (NSDictionary *)snapshot.value;
@@ -122,8 +122,10 @@
 		for (NSString *jobID in dict.allKeys) {
 			NSDictionary *chatNode = dict[jobID];
 			NSString *chatNodeID = chatNode.allKeys.firstObject;
-			[self.allChats addObject:@{@"jobID": jobID,
-									   @"chatNodeID": chatNodeID}];
+			if ([chatNodeID rangeOfString:key].location != NSNotFound) {
+				[self.allChats addObject:@{@"jobID": jobID,
+										   @"chatNodeID": chatNodeID}];
+			}
 		}
 		
 		completion(nil);
@@ -138,7 +140,7 @@
 	}
 	[self.allChats removeAllObjects];
 	
-	NSString *key = [NSString stringWithFormat:@"%@+", [DogUser curUser].userID];
+	NSString *key = [NSString stringWithFormat:@"%@", [DogUser curUser].userID];
 	
 	FIRDatabaseReference *ref;
 	ref = [[FirebaseRef allChatHistory] child:jobID];

@@ -155,7 +155,10 @@
 		self.allChats = [[NSMutableArray alloc] init];
 	}
 	
-	[[[FirebaseRef allChatHistory] queryEndingAtValue:[DogUser curUser].userID] observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
+	NSString *key = [NSString stringWithFormat:@"%@", [DogUser curUser].userID];
+	NSLog(@"%@", key);
+	
+	[[[FirebaseRef allChatHistory] queryEndingAtValue:key] observeEventType:FIRDataEventTypeValue withBlock:^(FIRDataSnapshot * _Nonnull snapshot) {
 		NSDictionary *dict = (NSDictionary *)snapshot.value;
 		if ([dict isEqual:[NSNull null]]) {
 			completion(nil);
@@ -167,8 +170,10 @@
 		for (NSString *jobID in dict.allKeys) {
 			NSDictionary *chatNode = dict[jobID];
 			NSString *chatNodeID = chatNode.allKeys.firstObject;
-			[self.allChats addObject:@{@"jobID": jobID,
-									   @"chatNodeID": chatNodeID}];
+			if ([chatNodeID rangeOfString:key].location != NSNotFound) {
+				[self.allChats addObject:@{@"jobID": jobID,
+										   @"chatNodeID": chatNodeID}];
+			}
 		}
 		
 		completion(nil);
